@@ -1,7 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <functional>
+#include <future>
 
 namespace ck
 {
@@ -9,11 +9,11 @@ namespace ck
 class Timer
 {
 public:
-Timer(std::function<unsigned long()> getTime);
+Timer(unsigned long (*getTime)());
 
 
 private:
-std::function<unsigned long()> getTime = nullptr;
+unsigned long (*getTime)();
 
 };
 

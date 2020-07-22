@@ -3,9 +3,9 @@
 
 namespace ck
 {
-    Timer::Timer(std::function<unsigned long()> getTime)
+    Timer::Timer(unsigned long (*getTime)())
     {
-
+        this->getTime = getTime;
     }
 
 

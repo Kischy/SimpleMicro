@@ -2,7 +2,7 @@
 #include "Timer.h"
 
 
-Timer timer1([](){return millis();}]);
+ck::Timer timer1(&millis);
 
 void setup() 
 {
@@ -12,5 +12,5 @@ void setup()
 void loop() 
 {
     Serial.println("hello");
-    delay(10); 
+    delay(10000); 
 }    
