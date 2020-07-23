@@ -9,28 +9,20 @@ template<size_t maxNoOfObj>
 class ArdTimer
 {
 public:
-ArdTimer(unsigned long (*getTime)())
+ArdTimer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr)
 {
     this->getTime = getTime;
+    this->timeOutCallback = timeOutCallback;
 }
 
 void start(unsigned long timeToTimeout)
 {
     this->timeToTimeout = timeToTimeout;
     timerIsRunning = true;
-
-    if(getTime != nullptr)
-    {
-        lastTimeout = getTime();
-    }
-    else
-    {
-        lastTimeout = 0;
-    }
-    
+    setLastTimeoutToNow();    
 }
 
-void stop()
+void stop() 
 {
     timerIsRunning = false;
 }
@@ -40,23 +32,19 @@ bool isTimerRunning() const
     return timerIsRunning;
 }
 
-void checkForTimeout()
+void checkForTimeout() 
 {
     if(timerIsRunning)
     {
-        if(timeToTimeout == 0)
+        if(getTime == nullptr)
         {
-            callTimeoutCallback();
-        }
-        else if(getTime == nullptr)
-        {
-            callTimeoutCallback();
+            doTimeout();
         }
         else
         {
             if(isATimeout())
             {
-                callTimeoutCallback();
+                doTimeout();
             }             
         }
         
@@ -70,23 +58,41 @@ unsigned long (*getTime)() = nullptr;
 void (*timeOutCallback)() = nullptr;
 
 
-void callTimeoutCallback()
+void doTimeout() 
 {
     if(timeOutCallback != nullptr)
     {
         timeOutCallback();
     }
+
+    setLastTimeoutToNow();
 }
 
-bool isATimeout()
+bool isATimeout() const
 {
     return ( getTime() - lastTimeout > timeToTimeout );
+}
+
+void setLastTimeoutToNow()
+{
+    if(getTime != nullptr)
+    {
+        lastTimeout = getTime();
+    }
+    else
+    {
+        lastTimeout = 0;
+    }
 }
 
 
 bool timerIsRunning = false;
 unsigned long lastTimeout;
 unsigned long timeToTimeout;
+
+
+//Statics
+//static *ArdTimer[maxNoOfObj];
 
 };
 
