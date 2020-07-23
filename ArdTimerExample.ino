@@ -1,8 +1,7 @@
 
 #include "ArdTimer.h"
 
-
-ck::ArdTimer timer1(&millis);
+ck::ArdTimer<100> timer1(&millis);
 
 void setup() 
 {
