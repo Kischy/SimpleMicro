@@ -1,15 +1,19 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <future>
+
 
 namespace ck
 {
-
-class Timer
+template
+class ArdTimer
 {
 public:
-Timer(unsigned long (*getTime)());
+ArdTimer(unsigned long (*getTime)())
+{
+    this->getTime = getTime;
+}
+
 
 
 private:
