@@ -1,38 +1,33 @@
-#ifndef TIMER_H
-#define TIMER_H
-
-
+#include "SimpleTimer.h"
 
 namespace ck
 {
-template<size_t maxNoOfObj>
-class ArdTimer
-{
-public:
-ArdTimer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr)
+
+SimpleTimer::SimpleTimer(unsigned long (*getTime)(), void (*timeOutCallback)())
 {
     this->getTime = getTime;
     this->timeOutCallback = timeOutCallback;
 }
 
-void start(unsigned long timeToTimeout)
+
+void SimpleTimer::start(unsigned long timeToTimeout)
 {
     this->timeToTimeout = timeToTimeout;
     timerIsRunning = true;
     setLastTimeoutToNow();    
 }
 
-void stop() 
+void SimpleTimer::stop() 
 {
     timerIsRunning = false;
 }
 
-bool isTimerRunning() const
+bool SimpleTimer::isTimerRunning() const
 {
     return timerIsRunning;
 }
 
-void checkForTimeout() 
+void SimpleTimer::checkForTimeout() 
 {
     if(timerIsRunning)
     {
@@ -52,13 +47,7 @@ void checkForTimeout()
 }
 
 
-
-private:
-unsigned long (*getTime)() = nullptr;
-void (*timeOutCallback)() = nullptr;
-
-
-void doTimeout() 
+void SimpleTimer::doTimeout() 
 {
     if(timeOutCallback != nullptr)
     {
@@ -68,12 +57,13 @@ void doTimeout()
     setLastTimeoutToNow();
 }
 
-bool isATimeout() const
+bool SimpleTimer::isATimeout() const
 {
     return ( getTime() - lastTimeout > timeToTimeout );
 }
 
-void setLastTimeoutToNow()
+
+void SimpleTimer::setLastTimeoutToNow()
 {
     if(getTime != nullptr)
     {
@@ -86,20 +76,5 @@ void setLastTimeoutToNow()
 }
 
 
-bool timerIsRunning = false;
-unsigned long lastTimeout;
-unsigned long timeToTimeout;
-
-
-//Statics
-//static *ArdTimer[maxNoOfObj];
-
-};
-
 }
 
-
-
-
-
-#endif

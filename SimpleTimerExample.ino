@@ -1,5 +1,5 @@
 
-#include "ArdTimer.h"
+#include "SimpleTimer.h"
 
 
 void printT1()
@@ -32,11 +32,11 @@ void printT5()
 }
 
 
-ck::ArdTimer<100> timer1(&millis, &printT1);
-ck::ArdTimer<100> timer2(&millis, &printT2);
-ck::ArdTimer<100> timer3(&millis, &printT3);
-ck::ArdTimer<100> timer4(&millis, &printT4);
-ck::ArdTimer<100> timer5(&millis, &printT5);
+ck::SimpleTimer timer1(&millis, &printT1);
+ck::SimpleTimer timer2(&millis, &printT2);
+ck::SimpleTimer timer3(&millis, &printT3);
+ck::SimpleTimer timer4(&millis, &printT4);
+ck::SimpleTimer timer5(&millis, &printT5);
 
 
 
