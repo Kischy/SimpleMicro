@@ -19,6 +19,7 @@ void printT3()
     Serial.print("Timer 3: ");
     Serial.println(millis());
 }
+
 void printT4()
 {
     Serial.print("Timer 4: ");
@@ -43,6 +44,7 @@ ck::SimpleTimer timer5(&millis, &printT5);
 void setup() 
 {
     Serial.begin(115200);
+
     timer1.start(1000);
     timer2.start(2000);
     timer3.start(3000);
