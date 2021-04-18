@@ -1,5 +1,7 @@
 .vscode/*
 .vscode/
+build/
+googletest/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
