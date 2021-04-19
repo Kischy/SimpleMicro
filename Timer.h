@@ -1,13 +1,13 @@
-#ifndef SIMPLETIMER_H
-#define SIMPLETIMER_H
+#ifndef TIMER_H
+#define TIMER_H
 
-namespace ck
+namespace smpmcr
 {
 
-class SimpleTimer
+class Timer
 {
 public:
-SimpleTimer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
+Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
 
 void start(unsigned long timeToTimeout);
 void stop();
@@ -31,9 +31,6 @@ unsigned long lastTimeout;
 unsigned long timeToTimeout;
 
 
-//Statics
-//static *SimpleTimer[maxNoOfObj];
-
 };
 
 
@@ -41,4 +38,4 @@ unsigned long timeToTimeout;
 }
 
 
-#endif //SIMPLETIMER_H
+#endif //TIMER_H

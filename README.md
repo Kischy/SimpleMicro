@@ -1,4 +1,10 @@
-# SimpleTimer
-Simple Timer for Arduino
+# Simple Micro libary for Arduino and others
 
-ToDo: Add listener that checks the timeouts of all timers
+A library I used in one of my Arduino projects. It provides Timer funcionality and Event/Listener functionality. Everything is meant to be lightweight.
+
+ToDo: Add tests for Timer
+ToDo: Add Timer Listener
+ToDo: Add LList class
+ToDo: Add EventListener
+ToDo: Add custom Events
+

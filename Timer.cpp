@@ -1,33 +1,33 @@
-#include "SimpleTimer.h"
+#include "Timer.h"
 
-namespace ck
+namespace smpmcr
 {
 
-SimpleTimer::SimpleTimer(unsigned long (*getTime)(), void (*timeOutCallback)())
+Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)())
 {
     this->getTime = getTime;
     this->timeOutCallback = timeOutCallback;
 }
 
 
-void SimpleTimer::start(unsigned long timeToTimeout)
+void Timer::start(unsigned long timeToTimeout)
 {
     this->timeToTimeout = timeToTimeout;
     timerIsRunning = true;
     setLastTimeoutToNow();    
 }
 
-void SimpleTimer::stop() 
+void Timer::stop() 
 {
     timerIsRunning = false;
 }
 
-bool SimpleTimer::isTimerRunning() const
+bool Timer::isTimerRunning() const
 {
     return timerIsRunning;
 }
 
-void SimpleTimer::checkForTimeout() 
+void Timer::checkForTimeout() 
 {
     if(timerIsRunning)
     {
@@ -47,7 +47,7 @@ void SimpleTimer::checkForTimeout()
 }
 
 
-void SimpleTimer::doTimeout() 
+void Timer::doTimeout() 
 {
     if(timeOutCallback != nullptr)
     {
@@ -57,13 +57,13 @@ void SimpleTimer::doTimeout()
     setLastTimeoutToNow();
 }
 
-bool SimpleTimer::isATimeout() const
+bool Timer::isATimeout() const
 {
     return ( getTime() - lastTimeout > timeToTimeout );
 }
 
 
-void SimpleTimer::setLastTimeoutToNow()
+void Timer::setLastTimeoutToNow()
 {
     if(getTime != nullptr)
     {
