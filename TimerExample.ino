@@ -54,9 +54,9 @@ void setup()
 
 void loop() 
 {
-    timer1.checkForTimeout();
-    timer2.checkForTimeout();
-    timer3.checkForTimeout();
-    timer4.checkForTimeout();
-    timer5.checkForTimeout();
+    timer1.listen();
+    timer2.listen();
+    timer3.listen();
+    timer4.listen();
+    timer5.listen();
 }    

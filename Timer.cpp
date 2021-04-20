@@ -22,12 +22,12 @@ void Timer::stop()
     timerIsRunning = false;
 }
 
-bool Timer::isTimerRunning() const
+bool Timer::isRunning() const
 {
     return timerIsRunning;
 }
 
-void Timer::checkForTimeout() 
+void Timer::listen() 
 {
     if(timerIsRunning)
     {
@@ -59,6 +59,7 @@ void Timer::doTimeout()
 
 bool Timer::isATimeout() const
 {
+    if(timeToTimeout == 0) return true;
     return ( getTime() - lastTimeout > timeToTimeout );
 }
 

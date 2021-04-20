@@ -12,8 +12,8 @@ Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
 void start(unsigned long timeToTimeout);
 void stop();
 
-bool isTimerRunning() const;
-void checkForTimeout();
+bool isRunning() const;
+void listen();
 
 
 
