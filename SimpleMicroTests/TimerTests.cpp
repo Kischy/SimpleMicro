@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <thread>
+#include <string>
 
 #include "../Timer.h"
 
@@ -39,6 +40,8 @@ public:
 
 bool TimerTests::wasCalled = false;
 
+
+
 TEST_F(TimerTests, CallsEventHandlerAfterTimeOut)
 {
     ASSERT_FALSE(TimerTests::wasCalled);
@@ -55,12 +58,32 @@ TEST_F(TimerTests, CallsEventHandlerAfterTimeOut)
     ASSERT_TRUE(TimerTests::wasCalled);
 }
 
-
-TEST_F(TimerTests, DoesNotCallEventHandlerIfListenIsNotCalled)
+TEST_F(TimerTests, TimeOutIsCalledIsWithinAcceptableRange)
 {
-    timer.start(0);
     ASSERT_FALSE(TimerTests::wasCalled);
+    unsigned long timeoutTime_ms = 30;
+    timer.start(timeoutTime_ms);
+
+    const unsigned long start = timeMilliSeconds();   
+
+    while(TimerTests::wasCalled == false)
+    {
+        timer.listen();
+    }
+
+    const unsigned long meassuredTime_ms = timeMilliSeconds() - start; 
+    const unsigned long acceptableDeviation_ms  = 2;
+
+    std::stringstream errorMsg;
+    errorMsg << "Timer timeout was not within acceptable range:\n";
+    errorMsg << "timeout time: " << timeoutTime_ms << " ms\n"; 
+    errorMsg << "meassured time: " << meassuredTime_ms << " ms\n"; 
+    errorMsg << "acceptable deviation: " << acceptableDeviation_ms << " ms"; 
+
+    ASSERT_TRUE(meassuredTime_ms + acceptableDeviation_ms >= timeoutTime_ms && 
+            timeoutTime_ms >= meassuredTime_ms - acceptableDeviation_ms) << errorMsg.str();
 }
+
 
 
 TEST_F(TimerTests, TimesOutImmediatelyForZeroTimeout)
@@ -70,6 +93,15 @@ TEST_F(TimerTests, TimesOutImmediatelyForZeroTimeout)
     timer.listen();
     ASSERT_TRUE(TimerTests::wasCalled);
 }
+
+
+
+TEST_F(TimerTests, DoesNotCallEventHandlerIfListenIsNotCalled)
+{
+    timer.start(0);
+    ASSERT_FALSE(TimerTests::wasCalled);
+}
+
 
 
 TEST_F(TimerTests, IsRunningAfterStart)
