@@ -55,6 +55,19 @@ TEST_F(TimerTests, CallsEventHandlerAfterTimeOut)
     ASSERT_TRUE(TimerTests::wasCalled);
 }
 
+TEST_F(TimerTests, CallingStopStopsTimerAndEventHandlerIsNeverCalled)
+{
+    ASSERT_FALSE(TimerTests::wasCalled);
+    timer.start(0);
+    ASSERT_TRUE(timer.isRunning());
+
+    timer.stop();
+    timer.listen();
+    ASSERT_FALSE(timer.isRunning());
+    ASSERT_FALSE(TimerTests::wasCalled);
+}
+
+
 TEST_F(TimerTests, TimeOutIsCalledIsWithinAcceptableRange)
 {
     ASSERT_FALSE(TimerTests::wasCalled);

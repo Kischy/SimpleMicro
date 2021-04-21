@@ -10,8 +10,8 @@ add_executable(SimpleMicroTests main.cpp TimerTests.cpp ../Timer.cpp)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
-  target_compile_options(SimpleMicroTests PRIVATE -std=c++11 -Wall -Wextra -Wpedantic -Werror --coverage)
-  target_link_options (SimpleMicroTests PRIVATE --coverage)
+  target_compile_options(SimpleMicroTests PRIVATE -std=c++11 -Wall -Wextra -Wpedantic -Werror)# --coverage)
+  #target_link_options (SimpleMicroTests PRIVATE --coverage)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
   target_compile_options(SimpleMicroTests PRIVATE /std=c++11 /W3 /WX)
