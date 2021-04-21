@@ -14,7 +14,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   #target_link_options (SimpleMicroTests PRIVATE --coverage)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # using Visual Studio C++
-  target_compile_options(SimpleMicroTests PRIVATE /std:c++11 /W3 /WX)
+  target_compile_options(SimpleMicroTests PRIVATE /W3 /WX)
 endif()
 
 target_link_libraries(SimpleMicroTests PRIVATE gtest) 
