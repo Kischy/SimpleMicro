@@ -6,8 +6,6 @@
 
 #include "../Timer.h"
 
-
-
 class TimerTests : public testing::Test
 {
 public:
@@ -22,7 +20,7 @@ public:
         auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
         auto epoch = now_ms.time_since_epoch();
         auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-        return value.count();
+        return static_cast<unsigned long>(value.count());
     }
 
     static void timeOutFunction()
@@ -47,7 +45,6 @@ TEST_F(TimerTests, CallsEventHandlerAfterTimeOut)
     ASSERT_FALSE(TimerTests::wasCalled);
     unsigned long timeoutTimeMS = 60;
     timer.start(timeoutTimeMS);
-    unsigned long start = timeMilliSeconds();    
 
     std::this_thread::sleep_for(std::chrono::milliseconds(timeoutTimeMS/3));
     timer.listen();
