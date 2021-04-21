@@ -1,6 +1,6 @@
-# Simple Micro libary
+# Simple Micro library
 
-Simple Micro libary I used in one of my Arduino projects. It provides Timer funcionality and Event/Listener functionality. Everything is meant to be lightweight.
+A lightweight library I used in one of my Arduino projects. It provides Timer funcionality, Event/Listener functionality and a linked List. I only implemented the parts I needed.
 
 
 ToDo: Add tests for Timer
