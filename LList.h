@@ -1,14 +1,19 @@
 #ifndef LLIST_H
 #define LLIST_H
 
+#include "IList.h"
 
-template<class value_type>
+namespace smpmcr
+{
+
+
+template<class T>
 class LList
 {
 private:
     struct LListElement
     {
-        value_type value;
+        T value;
         LListElement* nextElement = nullptr;
     };
 
@@ -24,20 +29,20 @@ public:
 };
 
 
-template<class value_type>
-bool LList<value_type>::empty() const
+template<class T>
+bool LList<T>::empty() const
 {
     return size == 0;
 }
 
-template<class value_type>
-size_t LList<value_type>::size() const
+template<class T>
+size_t LList<T>::size() const
 {
     return elementCount;
 }
 
 
-
+}
 
 
 #endif //LLIST_H
