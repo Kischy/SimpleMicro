@@ -1,7 +1,6 @@
 #ifndef ILIST_H
 #define ILIST_H
 
-#include "Iterator.h"
 
 namespace smpmcr
 {
