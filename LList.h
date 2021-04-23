@@ -1,8 +1,6 @@
 #ifndef LLIST_H
 #define LLIST_H
 
-#include "IList.h"
-
 namespace smpmcr
 {
 
@@ -21,11 +19,28 @@ private:
     LListElement* firstElement = nullptr;
 
 public:
-    bool empty() const;
-    size_t size() const;
+    class Iterator;
 
+    //Element acces
+    virtual T& front() = 0;
+    virtual const T& front() const = 0;
 
+    //Iterators
+    Iterator begin() = 0;
+    Iterator end() = 0;
 
+    //Capacity
+    virtual bool empty() const;
+    virtual size_t size() const;
+    virtual size_t max_size() const = 0;
+
+    //Modifiers
+    virtual void clear() = 0;
+    virtual void push_front(T&& value) = 0;
+    virtual T pop_front() = 0;
+
+    virtual void push_back(T&& value) = 0;
+    virtual T pop_back() = 0; 
 };
 
 
