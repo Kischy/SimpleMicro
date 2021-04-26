@@ -4,7 +4,7 @@
 #include <thread>
 #include <string>
 
-#include "../Timer.h"
+#include "../Timer/Timer.h"
 
 class TimerTests : public testing::Test
 {
