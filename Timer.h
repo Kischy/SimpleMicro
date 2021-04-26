@@ -13,7 +13,7 @@ void start(unsigned long timeToTimeout);
 void stop();
 
 bool isRunning() const;
-void listen();
+void update();
 
 
 

@@ -54,9 +54,9 @@ void setup()
 
 void loop() 
 {
-    timer1.listen();
-    timer2.listen();
-    timer3.listen();
-    timer4.listen();
-    timer5.listen();
+    timer1.update();
+    timer2.update();
+    timer3.update();
+    timer4.update();
+    timer5.update();
 }    

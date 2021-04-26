@@ -27,7 +27,7 @@ bool Timer::isRunning() const
     return timerIsRunning;
 }
 
-void Timer::listen() 
+void Timer::update() 
 {
     if(timerIsRunning)
     {
