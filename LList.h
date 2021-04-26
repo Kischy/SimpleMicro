@@ -4,13 +4,13 @@
 namespace smpmcr
 {
 
-
 template<class T>
 class LList
 {
 private:
-    struct LListElement
+    class LListElement
     {
+    public:
         LListElement(const T& value, LListElement* nextElement) :
         value(value),nextElement(nextElement) {}
 
@@ -24,10 +24,10 @@ private:
 public:
     class Iterator
     {
-        private:
+    private:
             LListElement *current = nullptr;
 
-        public:
+    public:
         Iterator(LListElement* startingElement)
         {
             current = startingElement;
@@ -36,6 +36,7 @@ public:
         T& operator*()  { return current->value;} 
         T* operator->() {return &current->value;}
 
+        //Prefix increment
         Iterator& operator++() 
         {
             current = current->nextElement;
@@ -49,7 +50,7 @@ public:
             ++(*this);
             return tmp;
         }
-
+        
         friend Iterator operator+=(Iterator& it, const size_t increment)
         {
             return it + increment;

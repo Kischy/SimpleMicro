@@ -118,7 +118,13 @@ TEST_F(LListIteratorAndFrontTests, IteratorCanBeIncremented)
     ASSERT_EQ(*it,8);
     it++;
     ASSERT_EQ(*it,7);
+    it += 3;
+    ASSERT_EQ(*it,4);
+    it = it + 3;
+    ASSERT_EQ(*it,1);
 }
+
+
 
 TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoop)
 {
