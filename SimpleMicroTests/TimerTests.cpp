@@ -47,11 +47,11 @@ TEST_F(TimerTests, CallsEventHandlerAfterTimeOut)
     timer.start(timeoutTimeMS);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(timeoutTimeMS/3));
-    timer.listen();
+    timer.update();
     ASSERT_FALSE(TimerTests::wasCalled);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(timeoutTimeMS*2/3 + 1));
-    timer.listen();
+    timer.update();
     ASSERT_TRUE(TimerTests::wasCalled);
 }
 
@@ -62,7 +62,7 @@ TEST_F(TimerTests, CallingStopStopsTimerAndEventHandlerIsNeverCalled)
     ASSERT_TRUE(timer.isRunning());
 
     timer.stop();
-    timer.listen();
+    timer.update();
     ASSERT_FALSE(timer.isRunning());
     ASSERT_FALSE(TimerTests::wasCalled);
 }
@@ -78,7 +78,7 @@ TEST_F(TimerTests, TimeOutIsCalledIsWithinAcceptableRange)
 
     while(TimerTests::wasCalled == false)
     {
-        timer.listen();
+        timer.update();
     }
 
     const unsigned long meassuredTime_ms = timeMilliSeconds() - start; 
@@ -100,13 +100,13 @@ TEST_F(TimerTests, TimesOutImmediatelyForZeroTimeout)
 {
     timer.start(0);
     ASSERT_FALSE(TimerTests::wasCalled);
-    timer.listen();
+    timer.update();
     ASSERT_TRUE(TimerTests::wasCalled);
 }
 
 
 
-TEST_F(TimerTests, DoesNotCallEventHandlerIfListenIsNotCalled)
+TEST_F(TimerTests, DoesNotCallEventHandlerIfUpdateIsNotCalled)
 {
     timer.start(0);
     ASSERT_FALSE(TimerTests::wasCalled);
@@ -126,7 +126,7 @@ TEST_F(TimerTests, TimeOutIsCalledImmediatelyWhenNoTimerFunctionIsPresent)
     ASSERT_FALSE(TimerTests::wasCalled);
     smpmcr::Timer timerNoTimeOutFct = smpmcr::Timer(nullptr, &TimerTests::timeOutFunction);
     timerNoTimeOutFct.start(10000000);
-    timerNoTimeOutFct.listen(); 
+    timerNoTimeOutFct.update(); 
 
     ASSERT_TRUE(TimerTests::wasCalled);
 }
@@ -136,7 +136,7 @@ TEST_F(TimerTests, DoesNothingWithNoEventHandler)
     ASSERT_FALSE(TimerTests::wasCalled);
     smpmcr::Timer timerEventHandler = smpmcr::Timer(nullptr, nullptr);
     timerEventHandler.start(10000000);
-    timerEventHandler.listen();  
+    timerEventHandler.update();  
 
     ASSERT_FALSE(TimerTests::wasCalled);
 }
