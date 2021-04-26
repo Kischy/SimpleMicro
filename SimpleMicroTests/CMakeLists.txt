@@ -15,7 +15,7 @@ endif()
 FetchContent_MakeAvailable(googletest)
 
 project(SimpleMicroTests) 
-add_executable(SimpleMicroTests TimerTests.cpp ../Timer.cpp LListTests.cpp) 
+add_executable(SimpleMicroTests ../Timer.cpp TimerTests.cpp LListTests.cpp) 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
@@ -26,5 +26,5 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(SimpleMicroTests PRIVATE /W3 /WX)
 endif()
 
-target_link_libraries(SimpleMicroTests PRIVATE gtest_main) 
+target_link_libraries(SimpleMicroTests PRIVATE gtest_main)
 

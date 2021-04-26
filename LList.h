@@ -11,6 +11,9 @@ class LList
 private:
     struct LListElement
     {
+        LListElement(const T& value, LListElement* nextElement) :
+        value(value),nextElement(nextElement) {}
+
         T value;
         LListElement* nextElement = nullptr;
     };
@@ -19,42 +22,111 @@ private:
     LListElement* firstElement = nullptr;
 
 public:
-    class Iterator;
+    class Iterator
+    {
+        private:
+            LListElement *current = nullptr;
 
-    //Element acces
-    virtual T& front() = 0;
-    virtual const T& front() const = 0;
+        public:
+        Iterator(LListElement* startingElement)
+        {
+            current = startingElement;
+        }
+
+        T& operator*()  { return current->value;} 
+        T* operator->() {return &current->value;}
+
+        Iterator& operator++() 
+        {
+            current = current->nextElement;
+            return *this;
+        }    
+
+        //Postfix increment
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;  
+            ++(*this);
+            return tmp;
+        }
+
+        friend Iterator operator+=(Iterator& it, const size_t increment)
+        {
+            return it + increment;
+        }
+
+        friend Iterator operator+(Iterator& it, const size_t increment)
+        {
+            for(size_t i = 0; i < increment; ++i)
+            {
+                if(it.current == nullptr) return it;
+                it++;
+            }
+            return it;
+        }
+
+        friend bool operator==(const Iterator& lhs, const Iterator& rhs)
+        {
+            return lhs.current == rhs.current;
+        }
+
+        friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
+        {
+            return lhs.current != rhs.current;
+        }
+
+                        
+    };
+
+    ~LList()
+    {
+        clear();
+    }
+
+    //Element access
+    virtual T& front() { return firstElement->value;}
+    virtual const T& front() const { return firstElement->value;}
 
     //Iterators
-    Iterator begin() = 0;
-    Iterator end() = 0;
+    Iterator begin() { return Iterator(firstElement); }
+    Iterator end() { return Iterator(nullptr); }
 
     //Capacity
-    virtual bool empty() const;
-    virtual size_t size() const;
-    virtual size_t max_size() const = 0;
+    virtual bool empty() const { return size() == 0;}
+    virtual size_t size() const {return elementCount;}
 
-    //Modifiers
-    virtual void clear() = 0;
-    virtual void push_front(T&& value) = 0;
-    virtual T pop_front() = 0;
+    //Modifiers    
+    void clear()
+    {
+        while(size() > 0)
+        {
+            pop_front();
+        }
+    }     
 
-    virtual void push_back(T&& value) = 0;
-    virtual T pop_back() = 0; 
+    virtual void push_front(const T& value) 
+    {       
+        LListElement* newFirstElement = new LListElement(value,firstElement);
+        firstElement = newFirstElement;        
+
+        elementCount++;
+    }
+
+    virtual void pop_front()
+    {
+        if(size() > 0)
+        {
+            LListElement* oldFirstElement = firstElement;
+            firstElement = firstElement->nextElement;
+            delete oldFirstElement;
+            elementCount--;
+        }
+
+    }
+    
+
 };
 
-
-template<class T>
-bool LList<T>::empty() const
-{
-    return size == 0;
-}
-
-template<class T>
-size_t LList<T>::size() const
-{
-    return elementCount;
-}
 
 
 }
