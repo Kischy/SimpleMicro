@@ -3,35 +3,35 @@
 namespace smpmcr
 {
 
-Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)())
+Timer::Timer(unsigned long (*m_getTime)(), void (*m_timeOutCallback)())
 {
-    this->getTime = getTime;
-    this->timeOutCallback = timeOutCallback;
+    this->m_getTime = m_getTime;
+    this->m_timeOutCallback = m_timeOutCallback;
 }
 
 
-void Timer::start(unsigned long timeToTimeout)
+void Timer::start(unsigned long m_timeToTimeout)
 {
-    this->timeToTimeout = timeToTimeout;
-    timerIsRunning = true;
+    this->m_timeToTimeout = m_timeToTimeout;
+    m_timerIsRunning = true;
     setLastTimeoutToNow();    
 }
 
 void Timer::stop() 
 {
-    timerIsRunning = false;
+    m_timerIsRunning = false;
 }
 
 bool Timer::isRunning() const
 {
-    return timerIsRunning;
+    return m_timerIsRunning;
 }
 
 void Timer::update() 
 {
-    if(timerIsRunning)
+    if(m_timerIsRunning)
     {
-        if(getTime == nullptr)
+        if(m_getTime == nullptr)
         {
             doTimeout();
         }
@@ -49,9 +49,9 @@ void Timer::update()
 
 void Timer::doTimeout() 
 {
-    if(timeOutCallback != nullptr)
+    if(m_timeOutCallback != nullptr)
     {
-        timeOutCallback();
+        m_timeOutCallback();
     }
 
     setLastTimeoutToNow();
@@ -59,23 +59,23 @@ void Timer::doTimeout()
 
 bool Timer::isATimeout() const
 {
-    if(timeToTimeout == 0) return true;
-    return ( getTime() - lastTimeout > timeToTimeout );
+    if(m_timeToTimeout == 0) return true;
+    return ( m_getTime() - m_lastTimeout > m_timeToTimeout );
 }
 
 
 void Timer::setLastTimeoutToNow()
 {
-    if(getTime != nullptr)
+    if(m_getTime != nullptr)
     {
-        lastTimeout = getTime();
+        m_lastTimeout = m_getTime();
     }
     else
     {
-        lastTimeout = 0;
+        m_lastTimeout = 0;
     }
 }
 
 
-}
+} //namespace smpmcr
 

@@ -33,7 +33,7 @@ TEST_F(LListTests, SizeIncreasesOnPushing)
 }
 
 
-TEST_F(LListTests, IsActuallyEmptyAfterClear)
+TEST_F(LListTests, IsEmptyAfterClear)
 {
     testList.push_front(1);
     testList.push_front(1);
@@ -125,7 +125,6 @@ TEST_F(LListIteratorAndFrontTests, IteratorCanBeIncremented)
 }
 
 
-
 TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoop)
 {
     int i = 9;
@@ -144,7 +143,7 @@ TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoop)
 }
 
 
-TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoopDoubleAddition)
+TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoopWithDoubleAddition)
 {
     int i = 9;
     for(auto it = testList.begin(); it != testList.end(); it = it + 2)
@@ -162,9 +161,6 @@ TEST_F(LListIteratorAndFrontTests, IteratorWorksInLoopDoubleAddition)
 }
 
 
-
-
-
 class LListIteratorArrowOperatorTests : public testing::Test
 {
 public:
@@ -178,7 +174,6 @@ public:
 
         int holderValue = 0;    
     };
-
 
     smpmcr::LList<IntHolder> testList;
 
@@ -196,7 +191,6 @@ TEST_F(LListIteratorArrowOperatorTests, ArrowOperatorCanBeUsed)
 {
     smpmcr::LList<IntHolder>::Iterator it = testList.begin();
     ASSERT_EQ(it->holderValue,9);
-
     *it = 200;
     ASSERT_EQ(it->holderValue,200);
     it = testList.begin();
