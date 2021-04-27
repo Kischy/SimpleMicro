@@ -1,134 +1,46 @@
 #ifndef LLIST_H
 #define LLIST_H
 
-#include "ILList.h"
+#include "LListBase.h"
 
 namespace smpmcr
 {
 
 template<class T>
-class LList : public ILList<T>
+class LList : public LListBase<T>
 {
 private:
-    class LListElement
-    {
-    public:
-        LListElement(const T& value, LListElement* nextElement) :
-        m_value(value),m_nextElement(nextElement) {}
+using ListElement = typename LListBase<T>::LListElement;
 
-        T m_value;
-        LListElement* m_nextElement = nullptr;
-    };
+public:    
+    virtual ~LList() override { this->clear(); }
 
-    size_t m_elementCount = 0;
-    LListElement* m_firstElement = nullptr;
-
-public:
-    class Iterator
-    {
-    private:
-            LListElement *m_current = nullptr;
-
-    public:
-        Iterator(LListElement* startingElement)
-        {
-            m_current = startingElement;
-        }
-
-        T& operator*()  { return m_current->m_value;} 
-        T* operator->() {return &m_current->m_value;}
-
-        //Prefix increment
-        Iterator& operator++() 
-        {
-            m_current = m_current->m_nextElement;
-            return *this;
-        }    
-
-        //Postfix increment
-        Iterator operator++(int)
-        {
-            Iterator tmp = *this;  
-            ++(*this);
-            return tmp;
-        }
-        
-        friend Iterator operator+=(Iterator& it, const size_t increment)
-        {
-            return it + increment;
-        }
-
-        friend Iterator operator+(Iterator& it, const size_t increment)
-        {
-            for(size_t i = 0; i < increment; ++i)
-            {
-                if(it.m_current == nullptr) return it;
-                it++;
-            }
-            return it;
-        }
-
-        friend bool operator==(const Iterator& lhs, const Iterator& rhs)
-        {
-            return lhs.m_current == rhs.m_current;
-        }
-
-        friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
-        {
-            return lhs.m_current != rhs.m_current;
-        }                        
-    };
-
-    virtual ~LList() override { clear(); }
-    
-    //Element access
-    virtual T& front() override { return m_firstElement->m_value;}
-    virtual const T& front() const override  { return m_firstElement->m_value;}
-
-    //Iterators
-    Iterator begin()  { return Iterator(m_firstElement); }
-    Iterator end()  { return Iterator(nullptr); }
-
-    //Capacity
-    virtual bool empty() const override { return size() == 0;}
-    virtual size_t size() const override {return m_elementCount;}
-
-    //Modifiers    
-    void clear() override;  
-    virtual void push_front(const T& m_value) override;
+    //Modifiers   
+    virtual void push_front(const T& value) override;
     virtual void pop_front() override;   
-
 };
 
 template<class T>
-void LList<T>::clear()
-{
-    while(size() > 0)
-    {
-        pop_front();
-    }
-}   
-
-template<class T>
-void LList<T>::push_front(const T& m_value)
-{       
-    LListElement* newFirstElement = new LListElement(m_value,m_firstElement);
-    m_firstElement = newFirstElement;        
-
-    m_elementCount++;
+void LList<T>::push_front(const T& value)
+{      
+   ListElement* newFirstElement = new ListElement(value,this->m_firstElement);
+   this->m_firstElement = newFirstElement;        
+   this->m_elementCount++;
 }
+
 
 template<class T>
 void LList<T>::pop_front()
 {
-    if(size() > 0)
+    if(this->size() > 0)
     {
-        LListElement* oldFirstElement = m_firstElement;
-        m_firstElement = m_firstElement->m_nextElement;
+        ListElement* oldFirstElement = this->m_firstElement;
+        this->m_firstElement = this->m_firstElement->m_nextElement;
         delete oldFirstElement;
-        m_elementCount--;
+        this->m_elementCount--;
     }
 }
+
 
 
 } //namespace smpmcr

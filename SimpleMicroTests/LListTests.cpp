@@ -13,7 +13,6 @@ public:
 
 };
 
-
 TEST_F(LListTests, InitialSizeIsZero)
 {
     ASSERT_EQ(testList.size(),0);
@@ -213,4 +212,5 @@ TEST_F(LListIteratorArrowOperatorTests, IteratorWorksInLoopArrowOperator)
         i--;
     }
 }
+
 

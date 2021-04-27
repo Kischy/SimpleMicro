@@ -15,10 +15,6 @@ public:
     virtual T& front() = 0;
     virtual const T& front() const = 0;
 
-    //Iterators
-  //  virtual const Iterator begin() = 0;
-   // virtual const Iterator end() = 0;
-
     //Capacity
     virtual bool empty() const = 0;
     virtual size_t size() const = 0;
