@@ -13,7 +13,6 @@ class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LL
 
 };
 
-
 class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>>>
 {
     public:
