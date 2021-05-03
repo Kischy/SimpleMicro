@@ -15,7 +15,7 @@ endif()
 FetchContent_MakeAvailable(googletest)
 
 project(SimpleMicroTests) 
-add_executable(SimpleMicroTests ../Timer/Timer.cpp TimerTests.cpp LListTests.cpp) 
+add_executable(SimpleMicroTests ../Timer/Timer.cpp TimerTests.cpp LListTests.cpp IListCommonTests.cpp) 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC
