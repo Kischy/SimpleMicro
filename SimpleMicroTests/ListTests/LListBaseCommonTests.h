@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <memory>
-#include "../LList/LListBase.h"
+#include "../../LList/LListBase.h"
 
 class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>>>
 {
@@ -32,12 +32,17 @@ class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::share
 class IntHolder
 {
 public:
+    IntHolder()
+    {
+        holderValue = 0;
+    }
+
     IntHolder(int value)
     {
         this->holderValue = value;
     }
 
-    int holderValue = 0;    
+    int holderValue ;    
 };
 
 

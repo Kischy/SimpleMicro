@@ -11,6 +11,8 @@ protected:
     class LListElement
     {
     public:
+        LListElement() {}
+
         LListElement(const T& value, LListElement* nextElement) :
         m_value(value),m_nextElement(nextElement) {}
 
@@ -77,8 +79,7 @@ public:
         }                        
     };
 
-    virtual ~LListBase() {};
-
+    virtual ~LListBase() {} 
 
     //Capacity
     virtual bool empty() const { return size() == 0;}

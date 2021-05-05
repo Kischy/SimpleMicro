@@ -4,7 +4,7 @@ A lightweight library I use in one of my Arduino projects. It provides Timer fun
 
 ToDo: Add StaticLList class
 
-ToDo: Add Example for LList and StaticList 
+ToDo: Add Example for LList and StaticLList 
 
 ToDo: Add Timer Listener
 

@@ -50,6 +50,40 @@ TEST_P(LListBaseTests, SizeDecreasesOnPoping)
 }
 
 
+TEST_P(LListBaseTests, CanBePushedAndPopedMultipleTimes)
+{
+    testList->push_front(1);
+
+    for(int i = 0; i < 10; ++i)
+    {
+        testList->push_front(2);
+        ASSERT_EQ(testList->front(),2);
+        ASSERT_EQ(testList->size(),2);
+
+        testList->pop_front();
+        ASSERT_EQ(testList->front(),1);
+        ASSERT_EQ(testList->size(),1);
+    }
+
+    testList->push_front(2);
+    testList->push_front(3);
+    ASSERT_EQ(testList->front(),3);
+    ASSERT_EQ(testList->size(),3);
+
+    testList->pop_front();
+    ASSERT_EQ(testList->front(),2);
+    ASSERT_EQ(testList->size(),2);
+
+    testList->pop_front();
+    ASSERT_EQ(testList->front(),1);
+    ASSERT_EQ(testList->size(),1);
+
+    testList->pop_front();
+    ASSERT_EQ(testList->size(),0);
+
+}
+
+
 
 
 
