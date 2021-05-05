@@ -1,13 +1,11 @@
 #ifndef LLISTBASE_H
 #define LLISTBASE_H
 
-#include "ILList.h"
-
 namespace smpmcr
 {
 
 template<class T>
-class LListBase : public ILList<T>
+class LListBase
 {
 protected:
     class LListElement
@@ -79,20 +77,25 @@ public:
         }                        
     };
 
+    virtual ~LListBase() {};
+
+
     //Capacity
-    virtual bool empty() const override { return size() == 0;}
-    virtual size_t size() const override {return m_elementCount;}
+    virtual bool empty() const { return size() == 0;}
+    virtual size_t size() const {return m_elementCount;}
 
     //Element access
-    virtual T& front() override { return m_firstElement->m_value;}
-    virtual const T& front() const override  { return m_firstElement->m_value;}
+    virtual T& front() { return m_firstElement->m_value;}
+    virtual const T& front() const  { return m_firstElement->m_value;}
 
     //Iterators
-    Iterator begin() { return Iterator(m_firstElement); }
-    Iterator end() { return Iterator(nullptr); }
+    virtual Iterator begin() { return Iterator(m_firstElement); }
+    virtual Iterator end() { return Iterator(nullptr); }
 
     //Modifiers    
-    void clear() override; 
+    virtual void clear(); 
+    virtual void push_front(const T& m_value) = 0;
+    virtual void pop_front() = 0;
 };
 
 template<class T>
