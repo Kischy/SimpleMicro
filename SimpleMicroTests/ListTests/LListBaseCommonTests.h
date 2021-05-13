@@ -5,7 +5,7 @@
 #include <memory>
 #include "../../LList/LListBase.h"
 
-class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>>>
+class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>> >
 {
     public:
     std::shared_ptr<smpmcr::LListBase<int>> testList = GetParam();
@@ -13,7 +13,28 @@ class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LL
 
 };
 
-class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>>>
+class LListBaseEraseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<long>> >
+{
+    public:
+    std::shared_ptr<smpmcr::LListBase<long>> testList = GetParam();
+
+    LListBaseEraseTests()
+    {
+        testList->push_front(1);
+        testList->push_front(2);
+        testList->push_front(1);
+        testList->push_front(3);
+        testList->push_front(1);
+        testList->push_front(1);
+        testList->push_front(5);
+    }
+    
+
+};
+
+
+
+class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>> >
 {
     public:
     std::shared_ptr<smpmcr::LListBase<int>> testList = GetParam();
@@ -46,7 +67,7 @@ public:
 };
 
 
-class LListBaseIteratorArrowOperatorTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<IntHolder>>>
+class LListBaseIteratorArrowOperatorTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<IntHolder>> >
 {
 public:
 

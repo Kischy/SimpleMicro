@@ -8,6 +8,11 @@ INSTANTIATE_TEST_SUITE_P(StaticLListTests,
 
 
 
+INSTANTIATE_TEST_SUITE_P(StaticLListEraseTests,
+                         LListBaseEraseTests,
+                         testing::Values(std::make_shared<smpmcr::StaticLList<long,100>>()));
+
+
 INSTANTIATE_TEST_SUITE_P(StaticLListIteratorAndFrontTests,
                          LListBaseIteratorAndFrontTests,
                          testing::Values(std::make_shared<smpmcr::StaticLList<int,100>>()));

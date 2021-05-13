@@ -1,11 +1,14 @@
 #ifndef LLISTBASE_H
 #define LLISTBASE_H
 
+#include "ILList.h"
+
 namespace smpmcr
 {
 
+
 template<class T>
-class LListBase
+class LListBase : public ILList<T>
 {
 protected:
     class LListElement

@@ -22,6 +22,7 @@ public:
     //Modifiers   
     virtual void push_front(const T& value) override;
     virtual void pop_front() override;   
+    virtual bool eraseFirst(const T& value) override;
 };
 
 template<class T,size_t MAX_SIZE>
@@ -47,6 +48,13 @@ void StaticLList<T,MAX_SIZE>::pop_front()
         this->m_firstElement = this->m_firstElement->m_nextElement;
         this->m_elementCount--;
     }
+}
+
+
+template<class T,size_t MAX_SIZE>
+bool StaticLList<T,MAX_SIZE>::eraseFirst(const T& )
+{
+    return true;
 }
 
 

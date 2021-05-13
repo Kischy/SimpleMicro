@@ -83,6 +83,33 @@ TEST_P(LListBaseTests, CanBePushedAndPopedMultipleTimes)
 
 }
 
+TEST_P(LListBaseEraseTests, EraseFristReturnsFalseIfNothingIsReturnedAndTrueOtherwise)
+{
+    ASSERT_FALSE(testList->eraseFirst(6));
+    ASSERT_TRUE(testList->eraseFirst(5));
+}
+
+TEST_P(LListBaseEraseTests, EraseFirstErasesFirstElementFound)
+{
+    ASSERT_TRUE(testList->eraseFirst(1));
+    smpmcr::LListBase<long>::Iterator it = testList->begin();
+
+    ASSERT_EQ(*it,5);
+    ASSERT_EQ(*(++it),1);
+    ASSERT_EQ(*(++it),3);
+    ASSERT_EQ(*(++it),1);
+    ASSERT_EQ(*(++it),2);
+    ASSERT_EQ(*(++it),1);
+
+    testList->push_front(6);
+    testList->push_front(7);
+    testList->push_front(8);
+
+    it = testList->begin();
+    ASSERT_EQ(*it,8);
+    ASSERT_EQ(*(++it),7);
+    ASSERT_EQ(*(++it),6);
+}
 
 
 

@@ -18,6 +18,8 @@ public:
     //Modifiers   
     virtual void push_front(const T& value) override;
     virtual void pop_front() override;   
+    virtual bool eraseFirst(const T& value) override;
+
 };
 
 template<class T>
@@ -40,6 +42,14 @@ void LList<T>::pop_front()
         this->m_elementCount--;
     }
 }
+
+
+template<class T>
+bool LList<T>::eraseFirst(const T& )
+{
+    return true;
+}
+
 
 
 
