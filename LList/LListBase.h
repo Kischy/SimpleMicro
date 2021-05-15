@@ -35,7 +35,7 @@ protected:
         return element == this->m_firstElement;
     }
 
-    virtual void deleteOldFirstElement(LListElement* oldFirstElement) = 0;
+    virtual void deleteElement(LListElement* oldFirstElement) = 0;
     virtual void removeElement(LListElement* element, LListElement* previousElement) = 0;
 
 public:
@@ -113,6 +113,7 @@ public:
     virtual void push_front(const T& m_value) = 0;
     virtual void pop_front();
     virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
+    virtual size_t eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
 
 };
 
@@ -122,6 +123,19 @@ void LListBase<T>::clear()
     while(size() > 0)
     {
         this->pop_front();
+    }
+}   
+
+template<class T>
+void LListBase<T>::pop_front()
+{
+    if(this->size() > 0)
+    {
+        LListElement* oldFirstElement = this->m_firstElement;
+        this->m_firstElement = this->m_firstElement->m_nextElement;
+        this->m_elementCount--;
+
+        this->deleteElement(oldFirstElement);
     }
 }   
 
@@ -148,18 +162,39 @@ bool LListBase<T>::eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(
     return false;
 } 
 
-template<class T>
-void LListBase<T>::pop_front()
-{
-    if(this->size() > 0)
-    {
-        LListElement* oldFirstElement = this->m_firstElement;
-        this->m_firstElement = this->m_firstElement->m_nextElement;
-        this->m_elementCount--;
 
-        this->deleteOldFirstElement(oldFirstElement);
+
+template<class T>
+size_t LListBase<T>::eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&))
+{
+    if(isEqualComparisonFunc == nullptr) return 0;
+    size_t counter = 0;
+
+    LListElement* previous = nullptr;
+    LListElement* current = this->m_firstElement;
+
+    for(size_t i = 0; i < this->size(); )
+    {
+        if(isEqualComparisonFunc(current->m_value,value) == true)
+        {
+            LListElement* nextCurrent = current->m_nextElement;
+
+            this->removeElement(current,previous);
+            counter++;
+            current = nextCurrent;
+        }
+        else
+        {
+            previous = current;
+            current = current->m_nextElement;
+            ++i;
+        }
     }
-}   
+
+    return counter;
+} 
+
+
 
 
 

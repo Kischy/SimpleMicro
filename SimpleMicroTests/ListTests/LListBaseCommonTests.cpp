@@ -83,6 +83,59 @@ TEST_P(LListBaseTests, CanBePushedAndPopedMultipleTimes)
 
 }
 
+TEST_P(LListBaseEraseTests, EraseAllFoundReturnsNumberOfErases)
+{
+    ASSERT_EQ(testList->eraseAllFound(1,comparisonFunc),4);
+    ASSERT_EQ(testList->eraseAllFound(3,comparisonFunc),1);
+    ASSERT_EQ(testList->eraseAllFound(6,comparisonFunc),0);
+    testList->clear();
+    ASSERT_EQ(testList->eraseAllFound(2,comparisonFunc),0);
+}
+
+
+TEST_P(LListBaseEraseTests, EraseWorksCorrectlyAndListCanStillBeUsed)
+{
+    ASSERT_EQ(testList->eraseAllFound(1,comparisonFunc),4);
+    ASSERT_TRUE(testList->eraseFirstFound(5,comparisonFunc));
+
+    smpmcr::LListBase<long>::Iterator it = testList->begin();
+
+    ASSERT_EQ(*it,3);
+    ASSERT_EQ(*(++it),2);
+
+    testList->push_front(6);
+    testList->push_front(7);
+    testList->push_front(8);
+
+    it = testList->begin();
+    ASSERT_EQ(*it,8);
+    ASSERT_EQ(*(++it),7);
+    ASSERT_EQ(*(++it),6);
+    ASSERT_EQ(*(++it),3);
+    ASSERT_EQ(*(++it),2);
+
+    testList->push_front(6);
+    testList->push_front(7);
+    testList->push_front(8);
+
+    ASSERT_TRUE(testList->eraseFirstFound(3,comparisonFunc));
+    ASSERT_EQ(testList->eraseAllFound(6,comparisonFunc),2);
+
+    it = testList->begin();
+    ASSERT_EQ(*it,8);
+    ASSERT_EQ(*(++it),7);
+    ASSERT_EQ(*(++it),8);
+    ASSERT_EQ(*(++it),7);
+    ASSERT_EQ(*(++it),2);
+
+    ASSERT_EQ(testList->eraseAllFound(8,comparisonFunc),2);
+    ASSERT_EQ(testList->eraseAllFound(7,comparisonFunc),2);
+    ASSERT_EQ(testList->eraseAllFound(2,comparisonFunc),1);
+    ASSERT_EQ(testList->size(),0);
+
+}
+
+
 TEST_P(LListBaseEraseTests, EraseFristReturnsFalseIfNothingIsReturnedAndTrueOtherwise)
 {
     ASSERT_FALSE(testList->eraseFirstFound(6,comparisonFunc));

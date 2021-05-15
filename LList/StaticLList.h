@@ -40,7 +40,7 @@ size_t getNextArrayPosition() const
     return MAX_SIZE;    
 }
 
-virtual void deleteOldFirstElement(ListElement* oldFirstElement) override
+virtual void deleteElement(ListElement* oldFirstElement) override
 {
     oldFirstElement->m_nextElement = nullptr;       
     if(this->size() == 0) this->m_lastElement = nullptr;
@@ -62,7 +62,7 @@ void removeElement(ListElement* element, ListElement* previousElement) override
 
         previousElement->m_nextElement = element->m_nextElement;
         this->m_elementCount--;
-        deleteOldFirstElement(element);
+        deleteElement(element);
     }
 }
 

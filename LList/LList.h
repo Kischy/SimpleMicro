@@ -12,7 +12,7 @@ class LList : public LListBase<T>
 private:
 using ListElement = typename LListBase<T>::LListElement;
 
-virtual void deleteOldFirstElement(ListElement* oldFirstElement) override
+virtual void deleteElement(ListElement* oldFirstElement) override
 {
     delete oldFirstElement;
 }
@@ -27,8 +27,8 @@ void removeElement(ListElement* element, ListElement* previousElement) override
     else
     {
         previousElement->m_nextElement = element->m_nextElement;
-        delete element;
         this->m_elementCount--;
+        deleteElement(element);
     }
 }
 
