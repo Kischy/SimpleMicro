@@ -19,7 +19,6 @@ INSTANTIATE_TEST_SUITE_P(StaticLListIteratorAndFrontTests,
 
 
 
-
 INSTANTIATE_TEST_SUITE_P(StaticLListIteratorArrowOperatorTests,
                          LListBaseIteratorArrowOperatorTests,
                          testing::Values(std::make_shared<smpmcr::StaticLList<IntHolder,100>>()));

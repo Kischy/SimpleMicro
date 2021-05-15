@@ -13,6 +13,49 @@ private:
 using ListElement = typename LListBase<T>::LListElement;
 
 ListElement listElements[MAX_SIZE];
+ListElement* m_lastElement = nullptr;   
+
+
+bool isLastElement(const ListElement* element) const
+{
+    if(this->size() == 0) return false;
+    return element == this->m_lastElement;
+}
+
+bool isFreeElement(const ListElement* element) const
+{
+    return element->m_nextElement == nullptr;
+}
+
+size_t getNextArrayPosition() const
+{
+    for(size_t i = 0; i < MAX_SIZE; ++i)
+    {
+        if(isFreeElement(&listElements[i]) && isLastElement(&listElements[i]) == false)
+        {
+            return i;
+        }
+    }
+
+    return MAX_SIZE;    
+}
+
+
+void removeElement(ListElement* element, ListElement* previousElement) override
+{
+    if(this->isFirstElement(element) == true)
+    {
+        this->pop_front();
+    }
+    else
+    {
+        previousElement->m_nextElement = element->m_nextElement;
+        element->m_nextElement = nullptr;
+        this->m_elementCount--;
+    }
+}
+
+
 
 public:    
     virtual ~StaticLList() override { this->clear(); }
@@ -22,7 +65,6 @@ public:
     //Modifiers   
     virtual void push_front(const T& value) override;
     virtual void pop_front() override;   
-    virtual bool eraseFirst(const T& value) override;
 };
 
 template<class T,size_t MAX_SIZE>
@@ -31,10 +73,15 @@ void StaticLList<T,MAX_SIZE>::push_front(const T& value)
     const size_t curr_size = this->size();
     if(curr_size < MAX_SIZE)
     {
-        ListElement* newFirstElement = &this->listElements[curr_size];
+        const size_t position = getNextArrayPosition();
+        ListElement* newFirstElement = &this->listElements[position];
+
         newFirstElement->m_value = value;
         newFirstElement->m_nextElement = this->m_firstElement;
-        this->m_firstElement = newFirstElement;        
+        this->m_firstElement = newFirstElement;      
+
+        if(curr_size == 0) this->m_lastElement = this->m_firstElement;
+
         this->m_elementCount++;
     }
 }
@@ -43,18 +90,17 @@ void StaticLList<T,MAX_SIZE>::push_front(const T& value)
 template<class T,size_t MAX_SIZE>
 void StaticLList<T,MAX_SIZE>::pop_front()
 {
-    if(this->size() > 0)
+    const size_t curr_size = this->size();
+    if(curr_size > 0)
     {
-        this->m_firstElement = this->m_firstElement->m_nextElement;
+        ListElement* oldFirstElement = this->m_firstElement;        
+        this->m_firstElement = this->m_firstElement->m_nextElement;         
+        oldFirstElement->m_nextElement = nullptr;       
+
+        if(curr_size == 1) this->m_lastElement = nullptr;
+
         this->m_elementCount--;
     }
-}
-
-
-template<class T,size_t MAX_SIZE>
-bool StaticLList<T,MAX_SIZE>::eraseFirst(const T& )
-{
-    return true;
 }
 
 

@@ -1,7 +1,10 @@
 #ifndef LLISTBASE_H
 #define LLISTBASE_H
 
+
+#include <stddef.h>
 #include "ILList.h"
+
 
 namespace smpmcr
 {
@@ -25,6 +28,15 @@ protected:
 
     size_t m_elementCount = 0;
     LListElement* m_firstElement = nullptr;   
+
+    bool isFirstElement(const LListElement* element) const
+    {
+        if(this->size() == 0) return false;
+        return element == this->m_firstElement;
+    }
+
+    virtual void removeElement(LListElement* element, LListElement* previousElement) = 0;
+
 
 public:
     class Iterator
@@ -100,6 +112,8 @@ public:
     virtual void clear(); 
     virtual void push_front(const T& m_value) = 0;
     virtual void pop_front() = 0;
+    virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
+
 };
 
 template<class T>
@@ -110,6 +124,31 @@ void LListBase<T>::clear()
         this->pop_front();
     }
 }   
+
+template<class T>
+bool LListBase<T>::eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&))
+{
+    if(isEqualComparisonFunc == nullptr) return false;
+
+    LListElement* previous = nullptr;
+    LListElement* current = this->m_firstElement;
+
+    for(size_t i = 0; i < this->size(); ++i)
+    {
+        if(isEqualComparisonFunc(current->m_value,value) == true)
+        {
+            this->removeElement(current,previous);
+            return true;
+        }
+
+        previous = current;
+        current = current->m_nextElement;
+    }
+
+    return false;
+} 
+
+
 
 
 } //namespace smpmcr

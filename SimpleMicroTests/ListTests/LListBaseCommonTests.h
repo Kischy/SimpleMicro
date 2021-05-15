@@ -18,6 +18,9 @@ class LListBaseEraseTests : public testing::TestWithParam< std::shared_ptr<smpmc
     public:
     std::shared_ptr<smpmcr::LListBase<long>> testList = GetParam();
 
+    bool (*comparisonFunc)(const long&, const long&) = [](const long& lhs, const long& rhs) {return lhs == rhs;};
+
+
     LListBaseEraseTests()
     {
         testList->push_front(1);
@@ -38,6 +41,8 @@ class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::share
 {
     public:
     std::shared_ptr<smpmcr::LListBase<int>> testList = GetParam();
+
+
 
     LListBaseIteratorAndFrontTests()
     {
@@ -63,7 +68,12 @@ public:
         this->holderValue = value;
     }
 
-    int holderValue ;    
+    int holderValue;  
+
+    bool operator==(const IntHolder& rhs)
+    {
+        return this->holderValue == rhs.holderValue;
+    }
 };
 
 

@@ -12,13 +12,27 @@ class LList : public LListBase<T>
 private:
 using ListElement = typename LListBase<T>::LListElement;
 
+void removeElement(ListElement* element, ListElement* previousElement) override
+{
+    if(this->isFirstElement(element) == true)
+    {
+        this->pop_front();
+    }
+    else
+    {
+        previousElement->m_nextElement = element->m_nextElement;
+        delete element;
+        this->m_elementCount--;
+    }
+}
+
+
 public:    
     virtual ~LList() override { this->clear(); }
 
     //Modifiers   
     virtual void push_front(const T& value) override;
     virtual void pop_front() override;   
-    virtual bool eraseFirst(const T& value) override;
 
 };
 
@@ -42,15 +56,6 @@ void LList<T>::pop_front()
         this->m_elementCount--;
     }
 }
-
-
-template<class T>
-bool LList<T>::eraseFirst(const T& )
-{
-    return true;
-}
-
-
 
 
 } //namespace smpmcr
