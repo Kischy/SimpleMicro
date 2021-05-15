@@ -40,6 +40,12 @@ size_t getNextArrayPosition() const
     return MAX_SIZE;    
 }
 
+virtual void deleteOldFirstElement(ListElement* oldFirstElement) override
+{
+    oldFirstElement->m_nextElement = nullptr;       
+    if(this->size() == 0) this->m_lastElement = nullptr;
+}
+
 
 void removeElement(ListElement* element, ListElement* previousElement) override
 {
@@ -49,11 +55,17 @@ void removeElement(ListElement* element, ListElement* previousElement) override
     }
     else
     {
+        if(isLastElement(element))
+        {
+            m_lastElement = previousElement;
+        }
+
         previousElement->m_nextElement = element->m_nextElement;
-        element->m_nextElement = nullptr;
         this->m_elementCount--;
+        deleteOldFirstElement(element);
     }
 }
+
 
 
 
@@ -64,7 +76,6 @@ public:
 
     //Modifiers   
     virtual void push_front(const T& value) override;
-    virtual void pop_front() override;   
 };
 
 template<class T,size_t MAX_SIZE>
@@ -85,24 +96,6 @@ void StaticLList<T,MAX_SIZE>::push_front(const T& value)
         this->m_elementCount++;
     }
 }
-
-
-template<class T,size_t MAX_SIZE>
-void StaticLList<T,MAX_SIZE>::pop_front()
-{
-    const size_t curr_size = this->size();
-    if(curr_size > 0)
-    {
-        ListElement* oldFirstElement = this->m_firstElement;        
-        this->m_firstElement = this->m_firstElement->m_nextElement;         
-        oldFirstElement->m_nextElement = nullptr;       
-
-        if(curr_size == 1) this->m_lastElement = nullptr;
-
-        this->m_elementCount--;
-    }
-}
-
 
 
 } //namespace smpmcr

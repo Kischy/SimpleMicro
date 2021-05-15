@@ -35,8 +35,8 @@ protected:
         return element == this->m_firstElement;
     }
 
+    virtual void deleteOldFirstElement(LListElement* oldFirstElement) = 0;
     virtual void removeElement(LListElement* element, LListElement* previousElement) = 0;
-
 
 public:
     class Iterator
@@ -111,7 +111,7 @@ public:
     //Modifiers    
     virtual void clear(); 
     virtual void push_front(const T& m_value) = 0;
-    virtual void pop_front() = 0;
+    virtual void pop_front();
     virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
 
 };
@@ -147,6 +147,19 @@ bool LListBase<T>::eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(
 
     return false;
 } 
+
+template<class T>
+void LListBase<T>::pop_front()
+{
+    if(this->size() > 0)
+    {
+        LListElement* oldFirstElement = this->m_firstElement;
+        this->m_firstElement = this->m_firstElement->m_nextElement;
+        this->m_elementCount--;
+
+        this->deleteOldFirstElement(oldFirstElement);
+    }
+}   
 
 
 

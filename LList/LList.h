@@ -12,6 +12,12 @@ class LList : public LListBase<T>
 private:
 using ListElement = typename LListBase<T>::LListElement;
 
+virtual void deleteOldFirstElement(ListElement* oldFirstElement) override
+{
+    delete oldFirstElement;
+}
+
+
 void removeElement(ListElement* element, ListElement* previousElement) override
 {
     if(this->isFirstElement(element) == true)
@@ -32,7 +38,6 @@ public:
 
     //Modifiers   
     virtual void push_front(const T& value) override;
-    virtual void pop_front() override;   
 
 };
 
@@ -42,19 +47,6 @@ void LList<T>::push_front(const T& value)
    ListElement* newFirstElement = new ListElement(value,this->m_firstElement);
    this->m_firstElement = newFirstElement;        
    this->m_elementCount++;
-}
-
-
-template<class T>
-void LList<T>::pop_front()
-{
-    if(this->size() > 0)
-    {
-        ListElement* oldFirstElement = this->m_firstElement;
-        this->m_firstElement = this->m_firstElement->m_nextElement;
-        delete oldFirstElement;
-        this->m_elementCount--;
-    }
 }
 
 
