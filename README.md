@@ -2,13 +2,12 @@
 
 A lightweight library I use in one of my Arduino projects. It provides Timer funcionality, Event/Listener (not yet) functionality and a linked List. I only implement the parts I need ^^.
 
-To use the library simply clone this repository to your Arduino libraries (<Arduino Install Path>\libraries).
+To use the library simply clone this repository to your Arduino libraries ("Arduino Install Path"\libraries).
 
-To get started one can have a look at the examples or simply
-```#include <SimpleMicro.h>```
+To get started one can have a look at the examples or simply `c++#include <SimpleMicro.h>`
 
 To use a timer use e.g. 
-```
+```c++
 smpmcr::Timer timer(&millis, &callbackFunction); // Initialize timer
 timer.start(1000); // Start timer with timeoutTime 1000
 timer.update(); // Check if the timer has a timeout and calls the callbackFunction if it has a timeout
@@ -19,7 +18,7 @@ Here `millis` is a function that measures time. `callbackFunction` is the callba
 
 
 To use a static linked list use e.g.
-```
+```c++
 smpmcr::StaticLList<int,50> list; // Initializes a list of integers with a maximum size of 50
 list.pushFront(99); // Pushes 99 to the front of the list
 list.popFront(); // Removes the first element from a list
@@ -40,7 +39,7 @@ size_t numberOfRemovedElements = list.eraseAllFound(99,isEqualComparisonFunc);
 
 To use a dynamic linked list use e.g.
 
-```
+```c++
 smpmcr::LList<int> list; // Initializes a list of integers
 ```
 The dynamic linked list has all the functionality of the static linked list except for the `maxSize` function. Do use this class with care. Using dynamic memory allocation on a microcontroller can lead to heap fragmentation.
