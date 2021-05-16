@@ -7,7 +7,7 @@ namespace smpmcr
 class Timer
 {
 public:
-Timer(unsigned long (*m_getTime)(), void (*m_timeOutCallback)() = nullptr);
+Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
 
 void start(unsigned long m_timeToTimeout);
 void stop();

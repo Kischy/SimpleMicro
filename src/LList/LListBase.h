@@ -111,8 +111,8 @@ public:
 
     //Modifiers    
     virtual void clear(); 
-    virtual void push_front(const T& m_value) = 0;
-    virtual void pop_front();
+    virtual void pushFront(const T& m_value) = 0;
+    virtual void popFront();
     virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
     virtual size_t eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
 
@@ -123,12 +123,12 @@ void LListBase<T>::clear()
 {
     while(size() > 0)
     {
-        this->pop_front();
+        this->popFront();
     }
 }   
 
 template<class T>
-void LListBase<T>::pop_front()
+void LListBase<T>::popFront()
 {
     if(this->size() > 0)
     {

@@ -9,12 +9,12 @@ TEST_P(LListBaseTests, InitialSizeIsZero)
 
 TEST_P(LListBaseTests, SizeIncreasesOnPushing)
 {
-    testList->push_front(1);
+    testList->pushFront(1);
     ASSERT_EQ(testList->size(),1);
     ASSERT_FALSE(testList->empty());
 
-    testList->push_front(1);
-    testList->push_front(1);
+    testList->pushFront(1);
+    testList->pushFront(1);
     ASSERT_EQ(testList->size(),3);
     ASSERT_FALSE(testList->empty());
 }
@@ -22,9 +22,9 @@ TEST_P(LListBaseTests, SizeIncreasesOnPushing)
 
 TEST_P(LListBaseTests, IsEmptyAfterClear)
 {
-    testList->push_front(1);
-    testList->push_front(1);
-    testList->push_front(1);
+    testList->pushFront(1);
+    testList->pushFront(1);
+    testList->pushFront(1);
     ASSERT_EQ(testList->size(),3);
     testList->clear();
     ASSERT_EQ(testList->size(),0);
@@ -34,51 +34,51 @@ TEST_P(LListBaseTests, IsEmptyAfterClear)
 
 TEST_P(LListBaseTests, SizeDecreasesOnPoping)
 {
-    testList->push_front(1);
-    testList->push_front(1);
-    testList->push_front(1);
+    testList->pushFront(1);
+    testList->pushFront(1);
+    testList->pushFront(1);
     ASSERT_EQ(testList->size(),3);
 
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->size(),2);
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->size(),1);
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->size(),0);
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->size(),0);
 }
 
 
 TEST_P(LListBaseTests, CanBePushedAndPopedMultipleTimes)
 {
-    testList->push_front(1);
+    testList->pushFront(1);
 
     for(int i = 0; i < 10; ++i)
     {
-        testList->push_front(2);
+        testList->pushFront(2);
         ASSERT_EQ(testList->front(),2);
         ASSERT_EQ(testList->size(),2);
 
-        testList->pop_front();
+        testList->popFront();
         ASSERT_EQ(testList->front(),1);
         ASSERT_EQ(testList->size(),1);
     }
 
-    testList->push_front(2);
-    testList->push_front(3);
+    testList->pushFront(2);
+    testList->pushFront(3);
     ASSERT_EQ(testList->front(),3);
     ASSERT_EQ(testList->size(),3);
 
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->front(),2);
     ASSERT_EQ(testList->size(),2);
 
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->front(),1);
     ASSERT_EQ(testList->size(),1);
 
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->size(),0);
 
 }
@@ -103,9 +103,9 @@ TEST_P(LListBaseEraseTests, EraseWorksCorrectlyAndListCanStillBeUsed)
     ASSERT_EQ(*it,3);
     ASSERT_EQ(*(++it),2);
 
-    testList->push_front(6);
-    testList->push_front(7);
-    testList->push_front(8);
+    testList->pushFront(6);
+    testList->pushFront(7);
+    testList->pushFront(8);
 
     it = testList->begin();
     ASSERT_EQ(*it,8);
@@ -114,9 +114,9 @@ TEST_P(LListBaseEraseTests, EraseWorksCorrectlyAndListCanStillBeUsed)
     ASSERT_EQ(*(++it),3);
     ASSERT_EQ(*(++it),2);
 
-    testList->push_front(6);
-    testList->push_front(7);
-    testList->push_front(8);
+    testList->pushFront(6);
+    testList->pushFront(7);
+    testList->pushFront(8);
 
     ASSERT_TRUE(testList->eraseFirstFound(3,comparisonFunc));
     ASSERT_EQ(testList->eraseAllFound(6,comparisonFunc),2);
@@ -155,9 +155,9 @@ TEST_P(LListBaseEraseTests, EraseFirstErasesFirstElementFoundAndOrderStaysTheSam
     ASSERT_EQ(*(++it),2);
     ASSERT_EQ(*(++it),1);
 
-    testList->push_front(6);
-    testList->push_front(7);
-    testList->push_front(8);
+    testList->pushFront(6);
+    testList->pushFront(7);
+    testList->pushFront(8);
 
     it = testList->begin();
     ASSERT_EQ(*it,8);
@@ -171,9 +171,9 @@ TEST_P(LListBaseEraseTests, EraseFirstErasesFirstElementFoundAndOrderStaysTheSam
     ASSERT_EQ(*(++it),1);
 
     ASSERT_TRUE(testList->eraseFirstFound(1,comparisonFunc));
-    testList->push_front(6);
-    testList->push_front(7);
-    testList->push_front(8);
+    testList->pushFront(6);
+    testList->pushFront(7);
+    testList->pushFront(8);
     it = testList->begin();
     ASSERT_EQ(*it,8);
     ASSERT_EQ(*(++it),7);
@@ -194,9 +194,9 @@ TEST_P(LListBaseEraseTests, EraseFirstErasesFirstElementFoundAndOrderStaysTheSam
 TEST_P(LListBaseIteratorAndFrontTests, FrontReturnsFirstElement)
 {
     ASSERT_EQ(testList->front(),9);
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->front(),8);
-    testList->pop_front();
+    testList->popFront();
     ASSERT_EQ(testList->front(),7);
 }
 

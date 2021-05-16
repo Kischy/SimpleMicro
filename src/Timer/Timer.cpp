@@ -3,10 +3,10 @@
 namespace smpmcr
 {
 
-Timer::Timer(unsigned long (*m_getTime)(), void (*m_timeOutCallback)())
+Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)())
 {
-    this->m_getTime = m_getTime;
-    this->m_timeOutCallback = m_timeOutCallback;
+    this->m_getTime = getTime;
+    this->m_timeOutCallback = timeOutCallback;
 }
 
 

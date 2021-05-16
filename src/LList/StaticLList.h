@@ -51,7 +51,7 @@ void removeElement(ListElement* element, ListElement* previousElement) override
 {
     if(this->isFirstElement(element) == true)
     {
-        this->pop_front();
+        this->popFront();
     }
     else
     {
@@ -75,11 +75,11 @@ public:
     static size_t max_size() {return MAX_SIZE;}
 
     //Modifiers   
-    virtual void push_front(const T& value) override;
+    virtual void pushFront(const T& value) override;
 };
 
 template<class T,size_t MAX_SIZE>
-void StaticLList<T,MAX_SIZE>::push_front(const T& value)
+void StaticLList<T,MAX_SIZE>::pushFront(const T& value)
 {  
     const size_t curr_size = this->size();
     if(curr_size < MAX_SIZE)

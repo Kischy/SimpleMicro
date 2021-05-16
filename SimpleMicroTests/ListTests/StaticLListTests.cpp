@@ -1,5 +1,5 @@
 #include "LListBaseCommonTests.h"
-#include "../../LList/StaticLList.h"
+#include "LList/StaticLList.h"
 
 
 INSTANTIATE_TEST_SUITE_P(StaticLListTests,

@@ -22,8 +22,8 @@ public:
 
     //Modifiers    
     virtual void clear() = 0;
-    virtual void push_front(const T& value) = 0;
-    virtual void pop_front() = 0;
+    virtual void pushFront(const T& value) = 0;
+    virtual void popFront() = 0;
     virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&))  = 0;
     virtual size_t eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) = 0;
 };

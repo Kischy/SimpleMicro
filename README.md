@@ -19,3 +19,7 @@ ToDo: Add custom Events
 ToDo: Add Examples for custom Events
 
 ToDo: Add Examples to Readme
+
+ToDo: Add keylist with syntax highlighting
+
+ToDo: Add const iterator to Linked List classes

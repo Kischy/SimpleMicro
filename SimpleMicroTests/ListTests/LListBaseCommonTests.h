@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <memory>
-#include "../../LList/LListBase.h"
+#include "LList/LListBase.h"
 
 class LListBaseTests : public testing::TestWithParam< std::shared_ptr<smpmcr::LListBase<int>> >
 {
@@ -23,13 +23,13 @@ class LListBaseEraseTests : public testing::TestWithParam< std::shared_ptr<smpmc
 
     LListBaseEraseTests()
     {
-        testList->push_front(1);
-        testList->push_front(2);
-        testList->push_front(1);
-        testList->push_front(3);
-        testList->push_front(1);
-        testList->push_front(1);
-        testList->push_front(5);
+        testList->pushFront(1);
+        testList->pushFront(2);
+        testList->pushFront(1);
+        testList->pushFront(3);
+        testList->pushFront(1);
+        testList->pushFront(1);
+        testList->pushFront(5);
     }
     
 
@@ -48,7 +48,7 @@ class LListBaseIteratorAndFrontTests : public testing::TestWithParam< std::share
     {
         for(int i = 0; i < 10; ++i)
         {
-            testList->push_front(i);
+            testList->pushFront(i);
         }
     }
     
@@ -87,7 +87,7 @@ public:
     {
         for(int i = 0; i < 10; ++i)
         {
-            testList->push_front(IntHolder(i));
+            testList->pushFront(IntHolder(i));
         }
     }
 

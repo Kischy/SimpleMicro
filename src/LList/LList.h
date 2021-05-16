@@ -22,7 +22,7 @@ void removeElement(ListElement* element, ListElement* previousElement) override
 {
     if(this->isFirstElement(element) == true)
     {
-        this->pop_front();
+        this->popFront();
     }
     else
     {
@@ -37,12 +37,12 @@ public:
     virtual ~LList() override { this->clear(); }
 
     //Modifiers   
-    virtual void push_front(const T& value) override;
+    virtual void pushFront(const T& value) override;
 
 };
 
 template<class T>
-void LList<T>::push_front(const T& value)
+void LList<T>::pushFront(const T& value)
 {      
    ListElement* newFirstElement = new ListElement(value,this->m_firstElement);
    this->m_firstElement = newFirstElement;        
