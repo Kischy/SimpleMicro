@@ -10,9 +10,9 @@ Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)())
 }
 
 
-void Timer::start(unsigned long m_timeToTimeout)
+void Timer::start(unsigned long timeToTimeout)
 {
-    this->m_timeToTimeout = m_timeToTimeout;
+    this->m_timeToTimeout = timeToTimeout;
     m_timerIsRunning = true;
     setLastTimeoutToNow();    
 }

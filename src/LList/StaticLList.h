@@ -72,7 +72,7 @@ void removeElement(ListElement* element, ListElement* previousElement) override
 public:    
     virtual ~StaticLList() override { this->clear(); }
 
-    static size_t max_size() {return MAX_SIZE;}
+    static size_t maxSize() {return MAX_SIZE;}
 
     //Modifiers   
     virtual void pushFront(const T& value) override;

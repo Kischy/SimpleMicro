@@ -9,7 +9,7 @@ class Timer
 public:
 Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
 
-void start(unsigned long m_timeToTimeout);
+void start(unsigned long timeToTimeout);
 void stop();
 
 bool isRunning() const;

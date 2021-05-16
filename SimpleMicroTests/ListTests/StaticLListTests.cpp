@@ -31,14 +31,14 @@ INSTANTIATE_TEST_SUITE_P(StaticLListIteratorArrowOperatorTests,
 TEST(StaticLListMaxSizeTests,MaxSizeReturnsCorrectValue)
 {    
 
-    size_t size100 = smpmcr::StaticLList<long,100>::max_size();
+    size_t size100 = smpmcr::StaticLList<long,100>::maxSize();
     ASSERT_EQ(size100,100);
     
-    size_t size4 = smpmcr::StaticLList<char,4>::max_size();
+    size_t size4 = smpmcr::StaticLList<char,4>::maxSize();
     ASSERT_EQ(size4,4);    
 
     smpmcr::StaticLList<char,6> testList;
-    ASSERT_EQ(testList.max_size(),6);
+    ASSERT_EQ(testList.maxSize(),6);
 }
 
 
