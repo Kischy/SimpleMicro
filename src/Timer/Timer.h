@@ -18,24 +18,24 @@ void update();
 
 
 private:
-unsigned long (*getTime)() = nullptr;
-void (*timeOutCallback)() = nullptr;
+unsigned long (*m_getTime)() = nullptr;
+void (*m_timeOutCallback)() = nullptr;
 
 
 void doTimeout();
 bool isATimeout() const;
 void setLastTimeoutToNow();
 
-bool timerIsRunning = false;
-unsigned long lastTimeout;
-unsigned long timeToTimeout;
+bool m_timerIsRunning = false;
+unsigned long m_lastTimeout;
+unsigned long m_timeToTimeout;
 
 
 };
 
 
 
-}
+} //namespace smpmcr
 
 
 #endif //TIMER_H

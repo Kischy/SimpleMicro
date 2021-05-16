@@ -1,7 +1,8 @@
 
-#include "Timer.h"
+#include <SimpleMicro.h>
 
 
+// This are the functions that are called back, when the timer detects a timeout
 void printT1()
 {
     Serial.print("Timer 1: ");
@@ -33,6 +34,10 @@ void printT5()
 }
 
 
+// Defining the timer functionality. First parameter is the pointer to a function that measures the time. 
+// Second parameter is a pointer to the callback function
+// First parameter: unsigned long (*)()
+// Second parameter: void (*)()
 smpmcr::Timer timer1(&millis, &printT1);
 smpmcr::Timer timer2(&millis, &printT2);
 smpmcr::Timer timer3(&millis, &printT3);
@@ -45,6 +50,7 @@ void setup()
 {
     Serial.begin(115200);
 
+    // When starting a timer a timeout is given
     timer1.start(1000);
     timer2.start(2000);
     timer3.start(3000);
@@ -54,6 +60,7 @@ void setup()
 
 void loop() 
 {
+    // Whenever update is called on a timer, it checks for a timeout and calls the callback function if neccessary
     timer1.update();
     timer2.update();
     timer3.update();
