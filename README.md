@@ -4,7 +4,7 @@ A lightweight library I use in one of my Arduino projects. It provides Timer fun
 
 
 # Getting started
-To use the library simply clone this repository to your Arduino libraries ("Arduino Install Path"\libraries). One can have a look at the examples or simply `#include <SimpleMicro.h>`
+To use the library simply clone this repository to your Arduino libraries ("Arduino Install Path"\libraries). One can have a look at the examples or simply `#include <SimpleMicro.h>`.
 
 ## Timer
 To use a timer use e.g. 
