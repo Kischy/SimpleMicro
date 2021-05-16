@@ -28,6 +28,12 @@ int front = list.front();  // Returns the value at the front of the list. This c
 bool isListEmpty = list.empty(); // Checks whether the list is empty.
 size_t currentSize = list.size(); // Returns the size of the list.
 list.maxSize(); // Returns the maximum size of the lost.
+smpmcr::StaticLList<int,50>::Iterator it = list.begin(); // Returns a iterator to the first element
+auto it = list.begin(); // Returns a iterator to the first element
+list.end(); // Returns a iterator that is past the last element
+// The iterator can be incremented, two iterators can be compared for equality and unequality. 
+// See for loop in LinkedList Example.
+
 
 // Removes the first element that has value 99 and returns true. If no element is found with that value it returns false.
 // The second parameter is a comparison function: bool (*isEqualComparisonFunc)(const T&, const T&).

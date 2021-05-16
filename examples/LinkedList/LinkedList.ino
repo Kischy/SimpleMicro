@@ -28,6 +28,7 @@ void loop()
         command = Serial.readString();
     }
 
+    // write "a+Your String" to the Serial Monitor to add "Your String" to the list
     if(command.length() >= 3 && command[0] == 'a' && command[1] == '+')
     {
        // Add something to the front. You can pop the front via popFront. 
@@ -37,6 +38,7 @@ void loop()
        Serial.println("Added: " + command.substring(2));
     }
 
+    // write "c+" to the Serial Monitor to clear the list
     if(command.length() == 2 && command[0] == 'c' && command[1] == '+')
     {
        // Clearing a list
@@ -44,7 +46,8 @@ void loop()
        Serial.println("Cleared list.");
        command = "";
     }
-        
+
+    // write "d+Your String" to the Serial Monitor to delete the first found "Your String" from the list
     if(command.length() >= 3 && command[0] == 'd' && command[1] == '+')
     {
        // Erase the first element with a specific value found in a list
@@ -55,7 +58,8 @@ void loop()
        }
        command = "";
     }
-        
+
+    // write "da+Your String" to the Serial Monitor to delete all "Your String"s from the list    
     if(command.length() >= 4 && command[0] == 'd' && command[1] == 'a' && command[2] == '+')
     {
        // Erase all the elements with a specific value found in a list
@@ -70,7 +74,7 @@ void loop()
        command = "";
     }
 
-    // Here the lst is printed to the Serial Monitor via iterators
+    // Here the list is printed to the Serial Monitor via iterators
     int index = 0;
     for(auto it = exampleList.begin(); it != exampleList.end(); ++it,++index)
     {
