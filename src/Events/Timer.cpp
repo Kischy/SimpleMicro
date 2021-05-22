@@ -3,10 +3,9 @@
 namespace smpmcr
 {
 
-Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)())
+Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)()) : Event(timeOutCallback)
 {
     this->m_getTime = getTime;
-    this->m_timeOutCallback = timeOutCallback;
 }
 
 
@@ -49,11 +48,7 @@ void Timer::update()
 
 void Timer::doTimeout() 
 {
-    if(m_timeOutCallback != nullptr)
-    {
-        m_timeOutCallback();
-    }
-
+    doCallback();
     setLastTimeoutToNow();
 }
 

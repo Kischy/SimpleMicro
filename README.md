@@ -9,13 +9,13 @@ To use the library simply clone this repository to your Arduino libraries ("Ardu
 ## Timer
 To use a timer use e.g. 
 ```c++
-smpmcr::Timer timer(&millis, &callbackFunction); // Initialize timer.
+smpmcr::Timer timer(&millis, &callbackFunction); // Initialize timer via Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr); constructor.
 timer.start(1000); // Start timer with timeoutTime 1000.
 timer.update(); // Checks if the timer has a timeout and calls the callbackFunction if it does.
 timer.stop(); // Stops timer from running.
 timer.isRunning(); // Checks if timer is running.
 ```
-Here `millis` is a function that measures time. `callbackFunction` is the callback that is called when the timer has a timeout. `1000` is the timeout time in whatever unit the time function uses. Every time `update()` is called it is checked if the timer has a timeout and the callback function is called.
+Here `millis` is a function that measures time (signature:`unsigned long (*getTime)()`). `callbackFunction` is the callback that is called when the timer has a timeout (signature:`void (*timeOutCallback)()`). `1000` is the timeout time in whatever unit the time function uses. Every time `update()` is called it is checked if the timer has a timeout and the callback function is called. 
 
 ## Linked list
 To use a static linked list use e.g.
