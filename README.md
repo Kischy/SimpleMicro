@@ -6,12 +6,28 @@ A lightweight library I use in one of my Arduino projects. It provides Timer fun
 # Getting started
 To use the library simply clone this repository to your Arduino libraries ("Arduino Install Path"\libraries). One can have a look at the examples or simply `#include <SimpleMicro.h>`.
 
+## EventListener
+Events, e.g. the Timer, can be added to a EventListener. To use the EventListener do
+```c++
+smpmcr::EventListener<10> eventListener; // Initialize eventListener with a maximum of 10 Events
+// Adds two objects of type class Timer to the eventListener
+eventListener.add(&timer1); 
+eventListener.add(&timer2);
+//call updateAll in the eventLoop to check if an event has occured
+eventListener.updateAll(); 
+
+eventListener.remove(&timer2); //Removes the event from the eventListener, so if updateAll is called the event will not trigger
+```
+
+Also see the Timer.ino example.
+
 ## Timer
 To use a timer use e.g. 
 ```c++
 smpmcr::Timer timer(&millis, &callbackFunction); // Initialize timer via Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr); constructor.
 timer.start(1000); // Start timer with timeoutTime 1000.
-timer.update(); // Checks if the timer has a timeout and calls the callbackFunction if it does.
+// Checks if the timer has a timeout and calls the callbackFunction if it does. If multiple timers or events are used one can add them to a EventListener and call updateAll()
+timer.update(); 
 timer.stop(); // Stops timer from running.
 timer.isRunning(); // Checks if timer is running.
 ```
@@ -49,20 +65,12 @@ To use a dynamic linked list use e.g.
 ```c++
 smpmcr::LList<int> list; // Initializes a list of integers
 ```
-The dynamic linked list has all the functionality of the static linked list except for the `maxSize` function. Do use this class with care. Using dynamic memory allocation on a microcontroller can lead to heap fragmentation.
+The dynamic linked list has all the functionality of the static linked list except for the `maxSize` function. Do use this class with care. Using dynamic memory allocation on a microcontroller can lead to heap fragmentation. Also see the LinkedList.ino example.
 
 
 ### ToDo list:
 
- - Add Example for Timer Listener
-
- - Add EventListener
-
- - Add Example for EventListener
-
- - Add custom Events
-
- - Add Examples for custom Events
+ - Add custom Events for Button presses with examples
 
  - Add Examples to Readme
 

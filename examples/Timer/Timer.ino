@@ -76,6 +76,6 @@ void loop()
     timer4.update();
     timer5.update();*/
 
-    // New way, call Update on the EventListener
+    // New way, call updateAll on the EventListener
     eventListener.updateAll();
 }    
