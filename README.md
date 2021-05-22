@@ -54,8 +54,6 @@ The dynamic linked list has all the functionality of the static linked list exce
 
 ### ToDo list:
 
- - Add Timer Listener
-
  - Add Example for Timer Listener
 
  - Add EventListener
