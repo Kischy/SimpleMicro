@@ -1,10 +1,13 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include "Event.h"
+
+
 namespace smpmcr
 {
 
-class Timer
+class Timer : public Event
 {
 public:
 Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
@@ -13,14 +16,11 @@ void start(unsigned long timeToTimeout);
 void stop();
 
 bool isRunning() const;
-void update();
-
+virtual void update() override;
 
 
 private:
 unsigned long (*m_getTime)() = nullptr;
-void (*m_timeOutCallback)() = nullptr;
-
 
 void doTimeout();
 bool isATimeout() const;

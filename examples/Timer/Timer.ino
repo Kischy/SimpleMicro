@@ -44,11 +44,19 @@ smpmcr::Timer timer3(&millis, &printT3);
 smpmcr::Timer timer4(&millis, &printT4);
 smpmcr::Timer timer5(&millis, &printT5);
 
+smpmcr::EventListener<10> eventListener;
+
 
 
 void setup() 
 {
     Serial.begin(115200);
+
+    eventListener.add(&timer1);
+    eventListener.add(&timer2);
+    eventListener.add(&timer3);
+    eventListener.add(&timer4);
+    eventListener.add(&timer5);
 
     // When starting a timer a timeout is given
     timer1.start(1000);
@@ -61,9 +69,13 @@ void setup()
 void loop() 
 {
     // Whenever update is called on a timer, it checks for a timeout and calls the callback function if neccessary
-    timer1.update();
+    // Old way    
+    /*timer1.update();
     timer2.update();
     timer3.update();
     timer4.update();
-    timer5.update();
+    timer5.update();*/
+
+    // New way, call updateAll on the EventListener
+    eventListener.updateAll();
 }    
