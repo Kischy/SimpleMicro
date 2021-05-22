@@ -30,18 +30,10 @@ void Timer::update()
 {
     if(m_timerIsRunning)
     {
-        if(m_getTime == nullptr)
+        if(isATimeout())
         {
             doTimeout();
-        }
-        else
-        {
-            if(isATimeout())
-            {
-                doTimeout();
-            }             
-        }
-        
+        }        
     }
 }
 
@@ -54,6 +46,7 @@ void Timer::doTimeout()
 
 bool Timer::isATimeout() const
 {
+    if(m_getTime == nullptr) return true;
     if(m_timeToTimeout == 0) return true;
     return ( m_getTime() - m_lastTimeout > m_timeToTimeout );
 }

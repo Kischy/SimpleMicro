@@ -2,7 +2,7 @@
 #define SIMPLEMICRO_H
 
 
-#include "Events/Timer.h"
+#include "Event/Timer.h"
 #include "LList/StaticLList.h"
 #include "LList/LList.h"
 
