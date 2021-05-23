@@ -70,8 +70,8 @@ The dynamic linked list has all the functionality of the static linked list exce
 
 ### ToDo list:
 
- - Add custom Events for Button presses with examples
-
+ - Test Button Event with real button. Update example.
+ 
  - Add Examples to Readme
 
  - Add keylist with syntax highlighting

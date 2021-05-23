@@ -1,27 +1,21 @@
 #include <gtest/gtest.h>
 
+
+#include <string>
 #include <chrono>
 #include <thread>
-#include <string>
 
 #include "Event/Timer.h"
+#include "EventTestsHelper.h"
 
 class TimerTests : public testing::Test
 {
 public:
 
-    smpmcr::Timer timer = smpmcr::Timer(&TimerTests::timeMilliSeconds, &TimerTests::timeOutFunction);
+    smpmcr::Timer timer = smpmcr::Timer(&test_helper::timeMilliSeconds, &TimerTests::timeOutFunction);
 
     static bool wasCalled;
 
-    static unsigned long timeMilliSeconds() 
-    {
-        auto now = std::chrono::system_clock::now();
-        auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
-        auto epoch = now_ms.time_since_epoch();
-        auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-        return static_cast<unsigned long>(value.count());
-    }
 
     static void timeOutFunction()
     {
@@ -74,14 +68,14 @@ TEST_F(TimerTests, TimeOutIsCalledIsWithinAcceptableRange)
     unsigned long timeoutTime_ms = 30;
     timer.start(timeoutTime_ms);
 
-    const unsigned long start = timeMilliSeconds();   
+    const unsigned long start = test_helper::timeMilliSeconds();   
 
     while(TimerTests::wasCalled == false)
     {
         timer.update();
     }
 
-    const unsigned long meassuredTime_ms = timeMilliSeconds() - start; 
+    const unsigned long meassuredTime_ms = test_helper::timeMilliSeconds() - start; 
     const unsigned long acceptableDeviation_ms  = 2;
 
     std::stringstream errorMsg;

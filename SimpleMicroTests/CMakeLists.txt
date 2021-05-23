@@ -17,7 +17,19 @@ FetchContent_MakeAvailable(googletest)
 project(SimpleMicroTests) 
 
 include_directories(../src)
-add_executable(SimpleMicroTests ../src/Event/Timer.cpp ./EventTests/TimerTests.cpp ./EventTests/ButtonEventTests.cpp  ./EventTests/EventListenerTests.cpp ./ListTests/LListTests.cpp ./ListTests/LListBaseCommonTests.cpp ./ListTests/StaticLListTests.cpp) 
+
+
+add_executable(
+  SimpleMicroTests 
+../src/Event/Timer.cpp 
+../src/Event/ButtonEvent.cpp 
+ ./EventTests/TimerTests.cpp 
+ ./EventTests/EventTestsHelper.cpp 
+ ./EventTests/ButtonEventTests.cpp  
+ ./EventTests/EventListenerTests.cpp 
+ ./ListTests/LListTests.cpp 
+ ./ListTests/LListBaseCommonTests.cpp 
+ ./ListTests/StaticLListTests.cpp) 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   # using GCC

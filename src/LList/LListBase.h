@@ -14,109 +14,109 @@ namespace smpmcr
 template<class T>
 class LListBase : public ILList<T>
 {
-protected:
-    class LListElement
-    {
-    public:
-        LListElement() {}
+    protected:
+        class LListElement
+        {
+            public:
+                LListElement() {}
 
-        LListElement(const T& value, LListElement* nextElement) :
-        m_value(value),m_nextElement(nextElement) {}
+                LListElement(const T& value, LListElement* nextElement) :
+                m_value(value),m_nextElement(nextElement) {}
 
-        T m_value;
-        LListElement* m_nextElement = nullptr;
-    };
+                T m_value;
+                LListElement* m_nextElement = nullptr;
+        };
 
-    size_t m_elementCount = 0;
-    LListElement* m_firstElement = nullptr;   
+        size_t m_elementCount = 0;
+        LListElement* m_firstElement = nullptr;   
 
-    bool isFirstElement(const LListElement* element) const
-    {
-        if(this->size() == 0) return false;
-        return element == this->m_firstElement;
-    }
+        bool isFirstElement(const LListElement* element) const
+        {
+            if(this->size() == 0) return false;
+            return element == this->m_firstElement;
+        }
 
-    virtual void deleteElement(LListElement* oldFirstElement) = 0;
-    virtual void removeElement(LListElement* element, LListElement* previousElement) = 0;
-
-public:
-    class Iterator
-    {
-    private:
-            LListElement *m_current = nullptr;
+        virtual void deleteElement(LListElement* oldFirstElement) = 0;
+        virtual void removeElement(LListElement* element, LListElement* previousElement) = 0;
 
     public:
-        Iterator(LListElement* startingElement)
+        class Iterator
         {
-            m_current = startingElement;
-        }
+            private:
+                    LListElement *m_current = nullptr;
 
-        T& operator*()  { return m_current->m_value;} 
-        T* operator->() {return &m_current->m_value;}
+            public:
+                Iterator(LListElement* startingElement)
+                {
+                    m_current = startingElement;
+                }
 
-        //Prefix increment
-        Iterator& operator++() 
-        {
-            m_current = m_current->m_nextElement;
-            return *this;
-        }    
+                T& operator*()  { return m_current->m_value;} 
+                T* operator->() {return &m_current->m_value;}
 
-        //Postfix increment
-        Iterator operator++(int)
-        {
-            Iterator tmp = *this;  
-            ++(*this);
-            return tmp;
-        }
-        
-        friend Iterator operator+=(Iterator& it, const size_t increment)
-        {
-            return it + increment;
-        }
+                //Prefix increment
+                Iterator& operator++() 
+                {
+                    m_current = m_current->m_nextElement;
+                    return *this;
+                }    
 
-        friend Iterator operator+(Iterator& it, const size_t increment)
-        {
-            for(size_t i = 0; i < increment; ++i)
-            {
-                if(it.m_current == nullptr) return it;
-                it++;
-            }
-            return it;
-        }
+                //Postfix increment
+                Iterator operator++(int)
+                {
+                    Iterator tmp = *this;  
+                    ++(*this);
+                    return tmp;
+                }
+                
+                friend Iterator operator+=(Iterator& it, const size_t increment)
+                {
+                    return it + increment;
+                }
 
-        friend bool operator==(const Iterator& lhs, const Iterator& rhs)
-        {
-            return lhs.m_current == rhs.m_current;
-        }
+                friend Iterator operator+(Iterator& it, const size_t increment)
+                {
+                    for(size_t i = 0; i < increment; ++i)
+                    {
+                        if(it.m_current == nullptr) return it;
+                        it++;
+                    }
+                    return it;
+                }
 
-        friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
-        {
-            return lhs.m_current != rhs.m_current;
-        }                        
+                friend bool operator==(const Iterator& lhs, const Iterator& rhs)
+                {
+                    return lhs.m_current == rhs.m_current;
+                }
+
+                friend bool operator!=(const Iterator& lhs, const Iterator& rhs)
+                {
+                    return lhs.m_current != rhs.m_current;
+                }                        
+        };
+
+        virtual ~LListBase() {} 
+
+        //Capacity
+        virtual bool empty() const { return size() == 0;}
+        virtual size_t size() const {return m_elementCount;}
+
+        //Element access
+        virtual T& front() { return m_firstElement->m_value;}
+        virtual const T& front() const  { return m_firstElement->m_value;}
+
+        //Iterators
+        virtual Iterator begin() { return Iterator(m_firstElement); }
+        virtual Iterator end() { return Iterator(nullptr); }
+
+        //Modifiers    
+        virtual void clear(); 
+        virtual void pushFront(const T& m_value) = 0;
+        virtual void popFront();
+        virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
+        virtual size_t eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
+
     };
-
-    virtual ~LListBase() {} 
-
-    //Capacity
-    virtual bool empty() const { return size() == 0;}
-    virtual size_t size() const {return m_elementCount;}
-
-    //Element access
-    virtual T& front() { return m_firstElement->m_value;}
-    virtual const T& front() const  { return m_firstElement->m_value;}
-
-    //Iterators
-    virtual Iterator begin() { return Iterator(m_firstElement); }
-    virtual Iterator end() { return Iterator(nullptr); }
-
-    //Modifiers    
-    virtual void clear(); 
-    virtual void pushFront(const T& m_value) = 0;
-    virtual void popFront();
-    virtual bool eraseFirstFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
-    virtual size_t eraseAllFound(const T& value,bool (*isEqualComparisonFunc)(const T&, const T&)) override;
-
-};
 
 template<class T>
 void LListBase<T>::clear()
