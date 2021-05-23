@@ -1,6 +1,20 @@
 #ifndef BUTTONEVENT_H
 #define BUTTONEVENT_H
 
+
+#define SIMPLE_MICRO_ARDUINO
+
+#ifdef NOT_SIMPLE_MICRO_ARDUINO
+#undef SIMPLE_MICRO_ARDUINO
+#endif
+
+
+#ifndef SIMPLE_MICRO_ARDUINO
+#include "Arduino.h"
+#endif
+
+
+
 #include "Event.h"
 
 namespace smpmcr
