@@ -36,9 +36,36 @@ namespace smpmcr
         unsigned long m_pressTime;
         unsigned long m_afterSinglePressWaitTime;
 
+
+
+        void updatePressState();
         void doDoublePressCallback();
-        bool isPressEvent();
-        bool isDoublePressEvent();
+
+        bool buttonIsPressed();
+        bool buttonIsUnpressed();
+        unsigned long getTime();
+
+        bool pressTimeWasSurpassed();
+        bool afterSinglePressTimeWasSurpassed();
+        bool timeWasSurpassed(const unsigned long startingTime, const unsigned long timeToSurpass);
+        
+
+        unsigned long m_pressedTime = 0;
+        unsigned long m_unpressedTime = 0;
+
+        enum button_press_state
+        {
+           unpressed,
+           possibly_pressed_for_first_time,
+           is_pressed_first_time_exceeding_pressing_time, 
+           was_pressed_once_and_is_now_unpressed, 
+           was_single_pressed,
+           possibliy_pressed_for_second_time,
+           is_pressed_second_time_exceeding_pressing_time,
+           was_double_pressed
+        };
+
+        button_press_state m_buttonState = button_press_state::unpressed;
     };
 }
 

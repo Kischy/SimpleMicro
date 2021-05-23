@@ -12,7 +12,7 @@ class ButtonEventTests : public testing::Test
 {
 public:
 static const unsigned long buttonPressTime = 30;
-static const unsigned long afterSinglePressTime = 45;
+static const unsigned long afterSinglePressTime = 50;
 
 static const int buttonMockPressedState = 1;
 static const int buttonMockUnpressedState = 0;
@@ -67,9 +67,10 @@ TEST_F(ButtonEventTests, ButtonPressedIsTriggeredOnlyIfHighForButtonPressTimeAnd
     buttonMockCurrentState = buttonMockPressedState;
     buttonEv.update();
     std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
-    
+    buttonEv.update();
     buttonMockCurrentState = buttonMockUnpressedState;
     buttonEv.update();
+
     ASSERT_FALSE(pressCallbackCalled);
     ASSERT_FALSE(doublePressCallbackCalled);
 
@@ -84,6 +85,7 @@ TEST_F(ButtonEventTests, ButtonDoublePressedIsTriggeredOnlyIfButtonIsPressedTwic
     buttonMockCurrentState = buttonMockPressedState;
     buttonEv.update();
     std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
     buttonMockCurrentState = buttonMockUnpressedState;
     std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime/2));
     buttonEv.update();
@@ -91,6 +93,8 @@ TEST_F(ButtonEventTests, ButtonDoublePressedIsTriggeredOnlyIfButtonIsPressedTwic
     ASSERT_FALSE(doublePressCallbackCalled);
 
     buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
     buttonEv.update();
     buttonMockCurrentState = buttonMockUnpressedState;
     buttonEv.update();
