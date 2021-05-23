@@ -4,22 +4,47 @@
 namespace smpmcr
 {
 
-        ButtonEvent::ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonHigh, const int buttonLow,
-                            void (*pressCallback)(),void (*doublePressCallback)(), const unsigned long pressTime, const unsigned long inBetweenPressesTime)
+        ButtonEvent::ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonPressedState, const int buttonUnpressedState,
+                            void (*pressCallback)(),void (*doublePressCallback)(), const unsigned long pressTime, const unsigned long afterSinglePressWaitTime)
         {
-            m_getTime = getTime;
-            m_readButton = readButton;
-            m_buttonHigh = buttonHigh;
-            m_buttonLow = buttonLow;
+            setTimeFunction(getTime);
+            setReadButtonFunction(readButton);
+            setButtonPressedState(buttonPressedState);
+            setButtonUnpressedState(buttonUnpressedState);
             setPressCallback(pressCallback);
             setDoublePressCallback(doublePressCallback);
-            m_pressTime = pressTime;
-            m_inBetweenPressesTime = inBetweenPressesTime;
+            setPressTime(pressTime);
+            setAfterSinglePressWaitTime(afterSinglePressWaitTime);
         }
+
+        void ButtonEvent::setTimeFunction(unsigned long (*getTime)())
+        {
+            m_getTime = getTime;
+        }
+
+
+        void ButtonEvent::setReadButtonFunction(int (*readButton)())
+        {
+            m_readButton = readButton;
+        }
+
+        
+        void ButtonEvent::setButtonPressedState(const int buttonPressedState)
+        {
+            m_buttonPressedState = buttonPressedState;
+        }
+
+
+        void ButtonEvent::setButtonUnpressedState(const int buttonUnpressedState)
+        {
+            m_buttonUnpressedState = buttonUnpressedState;
+        }
+
+
 
         void ButtonEvent::setPressCallback(void (*pressCallback)())
         {
-            this->setEventCallback(pressCallback);
+            setEventCallback(pressCallback);
         }
 
         void ButtonEvent::setDoublePressCallback(void (*doublePressCallback)())
@@ -27,16 +52,17 @@ namespace smpmcr
             m_doublePressCallback = doublePressCallback;
         }
 
-        void ButtonEvent::setButtonHigh(const int buttonHigh)
+
+        void ButtonEvent::setPressTime(const unsigned long pressTime)
         {
-            m_buttonHigh = buttonHigh;
+           m_pressTime = pressTime;
         }
 
-
-        void ButtonEvent::setButtonLow(const int buttonLow)
+        void ButtonEvent::setAfterSinglePressWaitTime(const unsigned long afterSinglePressWaitTime)
         {
-            m_buttonLow = buttonLow;
+            m_afterSinglePressWaitTime = afterSinglePressWaitTime;
         }
+
 
         void ButtonEvent::update()
         {

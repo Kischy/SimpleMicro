@@ -7,28 +7,34 @@ namespace smpmcr
 {
     class ButtonEvent : protected Event
     {
-        public:
+    public:
 
-        ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonHigh, const int buttonLow,
-                    void (*pressCallback)() = nullptr,void (*doublePressCallback)() = nullptr, const unsigned long pressTime = 250, const unsigned long inBetweenPressesTime = 250);
+        ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonPressedState, const int buttonUnpressedState,
+                    void (*pressCallback)() = nullptr,void (*doublePressCallback)() = nullptr, const unsigned long pressTime = 250, const unsigned long afterSinglePressWaitTime = 250);
+        
+        void setTimeFunction(unsigned long (*getTime)());
+        void setReadButtonFunction(int (*readButton)());
+
+        void setButtonPressedState(const int buttonPressedState);
+        void setButtonUnpressedState(const int buttonUnpressedState);
 
         void setPressCallback(void (*pressCallback)());
         void setDoublePressCallback(void (*doublePressCallback)());
-
-        void setButtonHigh(const int buttonHigh);
-        void setButtonLow(const int buttonLow);
+        
+        void setPressTime(const unsigned long pressTime);
+        void setAfterSinglePressWaitTime(const unsigned long afterSinglePressWaitTime);
 
         void update();
 
-        private:
+    private:
         unsigned long (*m_getTime)() = nullptr;
         int (*m_readButton)() = nullptr;
         void (*m_doublePressCallback)() = nullptr;
 
-        int m_buttonHigh;
-        int m_buttonLow;
+        int m_buttonPressedState;
+        int m_buttonUnpressedState;
         unsigned long m_pressTime;
-        unsigned long m_inBetweenPressesTime;
+        unsigned long m_afterSinglePressWaitTime;
 
         void doDoublePressCallback();
         bool isPressEvent();

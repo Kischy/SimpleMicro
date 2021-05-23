@@ -5,13 +5,19 @@ namespace smpmcr
 
 Timer::Timer(unsigned long (*getTime)(), void (*timeoutCallback)()) : Event(timeoutCallback)
 {
-    this->m_getTime = getTime;
+    setTimeFunction(getTime);
+}
+
+
+void Timer::setTimeFunction(unsigned long (*getTime)())
+{
+    m_getTime = getTime;
 }
 
 
 void Timer::start(const unsigned long timeToTimeout)
 {
-    this->m_timeToTimeout = timeToTimeout;
+    m_timeToTimeout = timeToTimeout;
     m_timerIsRunning = true;
     setLastTimeoutToNow();    
 }

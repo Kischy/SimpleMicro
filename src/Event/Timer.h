@@ -9,26 +9,28 @@ namespace smpmcr
 
 class Timer : public Event
 {
-public:
-Timer(unsigned long (*getTime)(), void (*timeoutCallback)() = nullptr);
+    public:
+        Timer(unsigned long (*getTime)(), void (*timeoutCallback)() = nullptr);
 
-void start(const unsigned long timeToTimeout);
-void stop();
+        void setTimeFunction(unsigned long (*getTime)());
 
-bool isRunning() const;
-virtual void update() override;
+        void start(const unsigned long timeToTimeout);
+        void stop();
+
+        bool isRunning() const;
+        virtual void update() override;
 
 
-private:
-unsigned long (*m_getTime)() = nullptr;
+    private:
+        unsigned long (*m_getTime)() = nullptr;
 
-void doTimeout();
-bool isATimeout() const;
-void setLastTimeoutToNow();
+        void doTimeout();
+        bool isATimeout() const;
+        void setLastTimeoutToNow();
 
-bool m_timerIsRunning = false;
-unsigned long m_lastTimeout;
-unsigned long m_timeToTimeout;
+        bool m_timerIsRunning = false;
+        unsigned long m_lastTimeout;
+        unsigned long m_timeToTimeout;
 
 
 };
