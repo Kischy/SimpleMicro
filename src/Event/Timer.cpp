@@ -3,13 +3,13 @@
 namespace smpmcr
 {
 
-Timer::Timer(unsigned long (*getTime)(), void (*timeOutCallback)()) : Event(timeOutCallback)
+Timer::Timer(unsigned long (*getTime)(), void (*timeoutCallback)()) : Event(timeoutCallback)
 {
     this->m_getTime = getTime;
 }
 
 
-void Timer::start(unsigned long timeToTimeout)
+void Timer::start(const unsigned long timeToTimeout)
 {
     this->m_timeToTimeout = timeToTimeout;
     m_timerIsRunning = true;
@@ -36,6 +36,7 @@ void Timer::update()
         }        
     }
 }
+
 
 
 void Timer::doTimeout() 

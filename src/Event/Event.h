@@ -18,9 +18,11 @@ void setEventCallback(void (*eventCallback)())
     this->m_eventCallback = eventCallback;
 }
 
+
 virtual void update() = 0;
 
 protected:
+
 
 void doCallback()
 {

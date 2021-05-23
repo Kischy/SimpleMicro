@@ -10,9 +10,9 @@ namespace smpmcr
 class Timer : public Event
 {
 public:
-Timer(unsigned long (*getTime)(), void (*timeOutCallback)() = nullptr);
+Timer(unsigned long (*getTime)(), void (*timeoutCallback)() = nullptr);
 
-void start(unsigned long timeToTimeout);
+void start(const unsigned long timeToTimeout);
 void stop();
 
 bool isRunning() const;
