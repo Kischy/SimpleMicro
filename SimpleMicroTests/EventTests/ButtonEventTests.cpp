@@ -11,8 +11,8 @@
 class ButtonEventTests : public testing::Test
 {
 public:
-static const unsigned long buttonPressTime = 30;
-static const unsigned long afterSinglePressTime = 50;
+static const unsigned long buttonPressTime = 15;
+static const unsigned long afterSinglePressTime = 30;
 
 static const int buttonMockPressedState = 1;
 static const int buttonMockUnpressedState = 0;
@@ -47,6 +47,104 @@ ButtonEventTests()
     doublePressCallbackCalled = false;
 }
 
+void doSinglePress()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime+1));
+    buttonEv.update();
+}
+
+void doDoublePress()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime/4));
+    buttonEv.update();
+
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+}
+
+void doSinglePressButPressAgainToFast()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+
+    //std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime+1));
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+}
+
+
+void doSinglePressButDontPressLongEnough()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+
+   // std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime+1));
+   // buttonEv.update();
+}
+
+
+void doDoublePressButFirstPressIsToShort_whichResultsInASinglePressAtTheEnd()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    //std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+   // buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime/2));
+    buttonEv.update();
+
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+}
+
+void doDoublePressButSecondPressIsToShort()
+{
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+    buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime/4));
+    buttonEv.update();
+
+    buttonMockCurrentState = buttonMockPressedState;
+    buttonEv.update();
+    //std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
+   // buttonEv.update();
+    buttonMockCurrentState = buttonMockUnpressedState;
+    buttonEv.update();
+}
+
+
+
 };
 
 
@@ -64,43 +162,52 @@ TEST_F(ButtonEventTests, NothingHappensIfNothingHappens)
 
 TEST_F(ButtonEventTests, ButtonPressedIsTriggeredOnlyIfHighForButtonPressTimeAndLowAfterwardsForAfterSinglePressTime)
 {
-    buttonMockCurrentState = buttonMockPressedState;
-    buttonEv.update();
-    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
-    buttonEv.update();
-    buttonMockCurrentState = buttonMockUnpressedState;
-    buttonEv.update();
+    doSinglePress();
+    ASSERT_TRUE(pressCallbackCalled);
+    ASSERT_FALSE(doublePressCallbackCalled);
+}
 
+TEST_F(ButtonEventTests, ButtonPressedIsNotTriggeredOnlyIfAfterSinglePressTimeIsNotExceeded)
+{
+    doSinglePressButPressAgainToFast();
+    ASSERT_FALSE(pressCallbackCalled);
+    ASSERT_FALSE(doublePressCallbackCalled);
+}
+
+TEST_F(ButtonEventTests, ButtonPressedIsNotTriggeredOnlyIfSinglePressTimeIsNotExceeded)
+{
+    doSinglePressButDontPressLongEnough();
+    ASSERT_FALSE(pressCallbackCalled);
+    ASSERT_FALSE(doublePressCallbackCalled);
+}
+
+
+
+TEST_F(ButtonEventTests, ButtonDoublePressedIsTriggeredOnlyIfButtonIsPressedTwiceForButtonPressTimeAndTheTimeInBetweenIsLowerThanAfterSinglePressTime)
+{
+    doDoublePress();
+    ASSERT_FALSE(pressCallbackCalled);
+    ASSERT_TRUE(doublePressCallbackCalled);
+}
+
+
+
+TEST_F(ButtonEventTests, ButtonDoublePressedIsNotTriggeredIfOneOfThePressesIsToShort)
+{
+    doDoublePressButFirstPressIsToShort_whichResultsInASinglePressAtTheEnd();
     ASSERT_FALSE(pressCallbackCalled);
     ASSERT_FALSE(doublePressCallbackCalled);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime+1));
     buttonEv.update();
     ASSERT_TRUE(pressCallbackCalled);
+
+    doDoublePressButSecondPressIsToShort();   
+    ASSERT_TRUE(pressCallbackCalled);
     ASSERT_FALSE(doublePressCallbackCalled);
 }
 
-TEST_F(ButtonEventTests, ButtonDoublePressedIsTriggeredOnlyIfButtonIsPressedTwiceForButtonPressTimeAndTheTimeInBetweenIsLowerThanAfterSinglePressTime)
-{
-    buttonMockCurrentState = buttonMockPressedState;
-    buttonEv.update();
-    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
-    buttonEv.update();
-    buttonMockCurrentState = buttonMockUnpressedState;
-    std::this_thread::sleep_for(std::chrono::milliseconds(afterSinglePressTime/2));
-    buttonEv.update();
-    ASSERT_FALSE(pressCallbackCalled);
-    ASSERT_FALSE(doublePressCallbackCalled);
 
-    buttonMockCurrentState = buttonMockPressedState;
-    buttonEv.update();
-    std::this_thread::sleep_for(std::chrono::milliseconds(buttonPressTime+1));
-    buttonEv.update();
-    buttonMockCurrentState = buttonMockUnpressedState;
-    buttonEv.update();
 
-    ASSERT_FALSE(pressCallbackCalled);
-    ASSERT_TRUE(doublePressCallbackCalled);
-}
 
 
