@@ -4,6 +4,11 @@
 namespace smpmcr
 {
 
+        ButtonEvent(const int pin, unsigned long (*getTime)() = &millis)
+        {
+            
+        }
+
         ButtonEvent::ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonPressedState, const int buttonUnpressedState,
                             void (*pressCallback)(),void (*doublePressCallback)(), const unsigned long pressTime, const unsigned long afterSinglePressWaitTime)
         {
@@ -15,6 +20,7 @@ namespace smpmcr
             setDoublePressCallback(doublePressCallback);
             setPressTime(pressTime);
             setAfterSinglePressWaitTime(afterSinglePressWaitTime);
+
         }
 
         void ButtonEvent::setTimeFunction(unsigned long (*getTime)())

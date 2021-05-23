@@ -2,17 +2,9 @@
 #define BUTTONEVENT_H
 
 
-#define SIMPLE_MICRO_ARDUINO
-
-#ifdef NOT_SIMPLE_MICRO_ARDUINO
-#undef SIMPLE_MICRO_ARDUINO
-#endif
-
-
-#ifndef SIMPLE_MICRO_ARDUINO
+#ifdef SIMPLE_MICRO_FOR_ARDUINO
 #include "Arduino.h"
 #endif
-
 
 
 #include "Event.h"
@@ -22,6 +14,11 @@ namespace smpmcr
     class ButtonEvent : protected Event
     {
     public:
+
+        #ifdef SIMPLE_MICRO_FOR_ARDUINO
+        ButtonEvent(const int pin, unsigned long (*getTime)() = &millis);
+        #endif
+
 
         ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonPressedState, const int buttonUnpressedState,
                     void (*pressCallback)() = nullptr,void (*doublePressCallback)() = nullptr, const unsigned long pressTime = 250, const unsigned long afterSinglePressWaitTime = 250);

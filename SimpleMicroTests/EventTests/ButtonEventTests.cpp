@@ -3,10 +3,9 @@
 #include <chrono>
 #include <thread>
 
+
 #include "Event/ButtonEvent.h"
 #include "EventTestsHelper.h"
-
-
 
 class ButtonEventTests : public testing::Test
 {

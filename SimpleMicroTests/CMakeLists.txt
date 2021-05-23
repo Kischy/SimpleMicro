@@ -17,6 +17,8 @@ FetchContent_MakeAvailable(googletest)
 project(SimpleMicroTests) 
 
 include_directories(../src)
+
+
 add_executable(
   SimpleMicroTests 
 ../src/Event/Timer.cpp 
