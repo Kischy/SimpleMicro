@@ -19,7 +19,7 @@ static int buttonMockCurrentState;
 static bool pressCallbackCalled;
 static bool doublePressCallbackCalled;
 
-static int readButtonMockFunction()
+static int readButtonMockFunction(int)
 {
    return buttonMockCurrentState;
 }

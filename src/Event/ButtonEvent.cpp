@@ -4,12 +4,7 @@
 namespace smpmcr
 {
 
-        ButtonEvent(const int pin, unsigned long (*getTime)() = &millis)
-        {
-            
-        }
-
-        ButtonEvent::ButtonEvent(unsigned long (*getTime)(), int (*readButton)(), const int buttonPressedState, const int buttonUnpressedState,
+        ButtonEvent::ButtonEvent(unsigned long (*getTime)(), int (*readButton)(int), const int buttonPressedState, const int buttonUnpressedState,
                             void (*pressCallback)(),void (*doublePressCallback)(), const unsigned long pressTime, const unsigned long afterSinglePressWaitTime)
         {
             setTimeFunction(getTime);
@@ -29,7 +24,7 @@ namespace smpmcr
         }
 
 
-        void ButtonEvent::setReadButtonFunction(int (*readButton)())
+        void ButtonEvent::setReadButtonFunction(int (*readButton)(int))
         {
             m_readButton = readButton;
         }
@@ -151,13 +146,13 @@ namespace smpmcr
         bool ButtonEvent::buttonIsPressed()
         {
             if(m_readButton == nullptr) return false;
-            return m_readButton() == m_buttonPressedState;
+            return m_readButton(m_pin) == m_buttonPressedState;
         }
 
         bool ButtonEvent::buttonIsUnpressed()
         {
             if(m_readButton == nullptr) return false;
-            return m_readButton() == m_buttonUnpressedState; 
+            return m_readButton(m_pin) == m_buttonUnpressedState; 
         }
 
         unsigned long ButtonEvent::getTime()
