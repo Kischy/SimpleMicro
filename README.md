@@ -65,7 +65,7 @@ To use a dynamic linked list use e.g.
 ```c++
 smpmcr::LList<int> list; // Initializes a list of integers
 ```
-The dynamic linked list has all the functionality of the static linked list except for the `maxSize` function. Do use this class with care. Using dynamic memory allocation on a microcontroller can lead to heap fragmentation. Also see the LinkedList.ino example.
+The dynamic linked list has all the functionality of the static linked list except for the `maxSize` function. Do use this class with care. Also see the LinkedList.ino example.
 
 
 ### ToDo list:
